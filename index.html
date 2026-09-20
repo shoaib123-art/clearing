@@ -365,7 +365,7 @@ function el(html){ const t=document.createElement("template"); t.innerHTML=html.
    Leaving PROXY_URL empty falls back to mode B. */
 const PROXY_URL = "";                       // e.g. "https://clearing-api.yourname.workers.dev"
 const GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODELS = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]; // tries the first, falls back on error
+const GROQ_MODELS = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b"]; // tries the first, falls back on error
 
 function parseLoose(txt){
   try{ return JSON.parse(txt); }catch(e){}
