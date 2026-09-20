@@ -365,7 +365,7 @@ function el(html){ const t=document.createElement("template"); t.innerHTML=html.
    Leaving PROXY_URL empty falls back to mode B. */
 const PROXY_URL = "";                       // e.g. "https://clearing-api.yourname.workers.dev"
 const GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions";
-const GROQ_MODEL = "llama-3.3-70b-versatile";
+const GROQ_MODELS = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"]; // tries the first, falls back on error
 
 function parseLoose(txt){
   try{ return JSON.parse(txt); }catch(e){}
@@ -381,6 +381,34 @@ function parseLoose(txt){
   const err = new Error("no json"); err.code = "invalid_json"; throw err;
 }
 
+async function callOnce(model, prompt, headers, useProxy){
+  const res = await fetch(useProxy ? PROXY_URL : GROQ_URL, {
+    method:"POST", headers,
+    body: JSON.stringify({
+      model, temperature: 0.4, max_tokens: 1300,
+      response_format: {type:"json_object"},
+      messages:[
+        {role:"system", content:"You are a careful assistant inside a cognitive behavioural therapy self-help tool. You never diagnose. You reply with a single valid JSON object only — no prose, no markdown code fences, no text before or after the JSON."},
+        {role:"user", content: prompt}
+      ]
+    })
+  });
+  if(!res.ok){
+    let detail = "";
+    try{ const j = await res.json(); detail = j?.error?.message || JSON.stringify(j).slice(0,300); }
+    catch(e){ try{ detail = (await res.text()).slice(0,300); }catch(e2){} }
+    const e = new Error("http "+res.status);
+    e.status = res.status; e.detail = detail;
+    e.code = res.status===401 ? "not_granted"
+           : res.status===429 ? "rate_limited"
+           : res.status>=500  ? "upstream_error" : "refused";
+    throw e;
+  }
+  const data = await res.json();
+  const txt = data?.choices?.[0]?.message?.content ?? "";
+  return parseLoose(txt);
+}
+
 const MODEL = {
   async json(prompt){
     const key = (S.settings.key||"").trim();
@@ -388,29 +416,32 @@ const MODEL = {
     if(!useProxy && !key){ const e=new Error("no key"); e.code="not_granted"; throw e; }
     const headers = {"Content-Type":"application/json"};
     if(!useProxy) headers["Authorization"] = "Bearer " + key;
-    let res;
-    try{
-      res = await fetch(useProxy ? PROXY_URL : GROQ_URL, {
-        method:"POST", headers,
-        body: JSON.stringify({
-          model: GROQ_MODEL, temperature: 0.4, max_tokens: 1200,
-          messages:[
-            {role:"system", content:"You are a careful assistant inside a cognitive behavioural therapy self-help tool. You never diagnose. You reply with valid JSON only — no prose, no markdown code fences."},
-            {role:"user", content: prompt}
-          ]
-        })
-      });
-    }catch(netErr){ const e=new Error("offline"); e.code="upstream_error"; throw e; }
-    if(!res.ok){
-      const e = new Error("http "+res.status);
-      e.code = res.status===401 ? "not_granted"
-             : res.status===429 ? "rate_limited"
-             : res.status>=500  ? "upstream_error" : "refused";
-      throw e;
+    const models = useProxy ? [null] : GROQ_MODELS;
+    let lastErr = null;
+    for(const m of models){
+      try{
+        return await callOnce(m, prompt, headers, useProxy);
+      }catch(err){
+        if(err.code === "not_granted" || err.code === "rate_limited"){ throw err; } // no point retrying with another model
+        lastErr = err;
+      }
     }
-    const data = await res.json();
-    const txt = data?.choices?.[0]?.message?.content ?? "";
-    return parseLoose(txt);
+    if(lastErr) throw lastErr;
+    const e = new Error("offline"); e.code = "upstream_error"; throw e;
+  },
+  /* Quick connectivity check, used by the Settings "Test key" button. */
+  async test(){
+    const key = (S.settings.key||"").trim();
+    const useProxy = !!PROXY_URL;
+    if(!useProxy && !key) return {ok:false, detail:"No key saved yet."};
+    const headers = {"Content-Type":"application/json"};
+    if(!useProxy) headers["Authorization"] = "Bearer " + key;
+    try{
+      await callOnce(useProxy ? null : GROQ_MODELS[0], "Reply with only this JSON object: {\"ok\":true}", headers, useProxy);
+      return {ok:true};
+    }catch(err){
+      return {ok:false, detail: (err.detail || err.message || "Unknown error") + (err.status? " (HTTP "+err.status+")":"") };
+    }
   }
 };
 
@@ -428,6 +459,11 @@ const AI_ERRORS = {
   default:"Analysis didn\u2019t come through. The manual tools below work the same way."
 };
 function aiMsg(code){ return AI_ERRORS[code] ?? AI_ERRORS.default; }
+function aiErrorCard(err){
+  const base = aiMsg(err?.code);
+  const detail = err?.detail ? `<details style="margin-top:8px"><summary style="cursor:pointer;font-size:12.5px;color:var(--ink-3)">Technical detail</summary><p class="muted" style="margin:6px 0 0;font-family:monospace;font-size:12px;word-break:break-word">${esc(err.detail)}</p></details>` : "";
+  return el(`<div class="notice">${esc(base)}${detail}</div>`);
+}
 
 function riskFlagged(text){
   const t = " " + String(text||"").toLowerCase().replace(/[^a-z\s-]/g," ") + " ";
@@ -541,76 +577,45 @@ SCREENS.home = ()=>{
 
 /* ═══ SCREEN: Thought record ════════════════════════════ */
 SCREENS.record = ()=>{
-  const draft = {situation:"", thought:"", emotions:{}, before:80, after:null, distortions:[], belief:null, reframe:"", methods:[]};
+  const draft = {thought:"", before:80, after:null, distortions:[], core:null, reframe:""};
   const c = el(`<div></div>`);
-  c.appendChild(el(`<h1>Thought record</h1>`));
-  c.appendChild(el(`<p class="lede">Write it exactly as it sounds in your head. Don't soften it — the harsh version is the one doing the damage, so that's the one we work on.</p>`));
+  c.appendChild(el(`<h1>Reframe a thought</h1>`));
+  c.appendChild(el(`<p class="lede">Write it exactly as it sounds in your head. One label, three ways to answer it back — pick the one that actually lands.</p>`));
 
-  /* step 1 — situation */
-  const s1 = el(`<div class="card"><div class="step"><div class="step-n">1</div><div class="step-b">
-    <h3>What happened?</h3>
-    <p class="muted" style="margin-bottom:10px">One sentence. The event, not your interpretation of it.</p>
-    <textarea id="situation" rows="2" placeholder="My manager skipped over my update in the meeting."></textarea>
-  </div></div></div>`);
-  c.appendChild(s1);
-
-  /* step 2 — emotions */
-  const s2 = el(`<div class="card"><div class="step"><div class="step-n">2</div><div class="step-b">
-    <h3>How does it feel, right now?</h3>
-    <p class="muted" style="margin-bottom:14px">Rate only the ones that are actually present. You'll rate them again at the end.</p>
-    <div id="emos"></div>
-  </div></div></div>`);
-  const emos = s2.querySelector("#emos");
-  EMOTIONS.forEach(e=>{
-    draft.emotions[e.id] = 0;
-    emos.appendChild(slider(e.name, 0, v => draft.emotions[e.id] = v));
-  });
-  c.appendChild(s2);
-
-  /* step 3 — the thought */
-  const s3 = el(`<div class="card"><div class="step"><div class="step-n">3</div><div class="step-b">
-    <h3>What are you telling yourself?</h3>
-    <p class="muted" style="margin-bottom:10px">The actual sentence. "I'm invisible here and I always will be" — not "I felt a bit overlooked."</p>
+  const input = el(`<div class="card">
     <textarea id="thought" rows="3" placeholder="I'm invisible here. Nobody takes me seriously and they never will."></textarea>
-    <div style="margin-top:16px">
+    <div style="margin:14px 0 4px">
       <label class="fl">How much do you believe it, right now?</label>
       <div id="beliefslider"></div>
       <div class="sl-lab"><span>not at all</span><span>completely</span></div>
     </div>
-    <button class="btn" id="analyse" style="margin-top:6px">Find what's distorted</button>
-  </div></div></div>`);
-  s3.querySelector("#beliefslider").appendChild(slider("Belief in the thought", 80, v => draft.before = v));
-  c.appendChild(s3);
+    <button class="btn" id="go">Reframe it</button>
+  </div>`);
+  input.querySelector("#beliefslider").appendChild(slider("Belief in the thought", 80, v => draft.before = v));
+  c.appendChild(input);
 
   const out = el(`<div id="out"></div>`);
   c.appendChild(out);
 
-  s3.querySelector("#analyse").onclick = async ()=>{
-    draft.situation = c.querySelector("#situation").value.trim();
-    draft.thought   = c.querySelector("#thought").value.trim();
+  input.querySelector("#go").onclick = async ()=>{
+    draft.thought = c.querySelector("#thought").value.trim();
     if(!draft.thought){ c.querySelector("#thought").focus(); return; }
 
     out.innerHTML = "";
-    if(riskFlagged(draft.thought + " " + draft.situation)){
-      out.appendChild(crisisCard());
-    }
+    if(riskFlagged(draft.thought)) out.appendChild(crisisCard());
 
-    const btn = s3.querySelector("#analyse");
+    const btn = input.querySelector("#go");
     btn.disabled = true;
-    const think = thinkingEl("Looking at the structure of the thought…");
+    const think = thinkingEl("Reading it closely…");
     out.appendChild(think);
 
-    let result = null;
+    let result = null, error = null;
     if(AI){
-      const top = Object.entries(draft.emotions).filter(([,v])=>v>20)
-        .map(([k,v])=> (EMOTIONS.find(e=>e.id===k)?.name||k)+" "+v).join(", ") || "not rated";
       const prompt =
 `You are assisting inside a self-guided cognitive behavioural therapy tool. You are not a clinician and must not diagnose.
 
-The user's situation: ${draft.situation || "(not given)"}
-Their automatic thought, verbatim: ${draft.thought}
+The user's automatic thought, verbatim: ${draft.thought}
 Belief in the thought: ${draft.before}/100
-Emotions reported: ${top}
 
 Distortion categories (use these exact ids):
 ${DISTORTIONS.map(d=>`${d.id} = ${d.name}: ${d.def}`).join("\n")}
@@ -618,37 +623,30 @@ ${DISTORTIONS.map(d=>`${d.id} = ${d.name}: ${d.def}`).join("\n")}
 Core belief categories (use these exact ids):
 ${CORE_BELIEFS.map(b=>`${b.id} = ${b.name}: ${b.def}`).join("\n")}
 
-Reframing methods (use these exact ids):
-${METHODS.map(m=>`${m.id} = ${m.name}`).join("\n")}
-
 Reply with ONLY a JSON object, no prose around it:
 {
  "risk": "none" | "concern",
- "distortions": [{"id":"<id>","quote":"<the exact words from their thought that show it>","why":"<one sentence, second person, plain and warm, no jargon>"}],
+ "distortions": [{"id":"<id>","quote":"<exact words from their thought that show it>","why":"<one sentence, second person, plain and warm, no jargon>"}],
  "core": {"id":"<id>","why":"<one sentence on what the thought implies they believe about themselves>"},
- "socratic": ["<question>","<question>","<question>"],
- "methods": ["<id>","<id>"],
- "empathy": "<one or two sentences that show you understood why this hurts. Do not reassure, do not minimise, do not give advice here.>"
+ "reframes": [
+   {"text":"<a truer version of the thought, first person, keeping their facts>","note":"<one sentence on which method this uses and why it's more accurate, e.g. examines the evidence, or finds the shade of grey>"},
+   {"text":"<a second, differently-angled truer version>","note":"<one sentence, different method than the first>"},
+   {"text":"<a third truer version, the most concise of the three>","note":"<one sentence, different method again>"}
+ ]
 }
 
-Rules: between one and three distortions, ordered by how strongly present. Quote only words that really appear in their thought. Socratic questions must be answerable by them with facts they already have — open, specific, never rhetorical, never leading to a forced happy answer. Set risk to "concern" only if the text suggests self-harm, suicide, or danger to someone.`;
-      try{
-        result = await AI.json(prompt);
-      }catch(err){
-        think.remove();
-        const m = aiMsg(err.code);
-        if(m) out.appendChild(el(`<div class="notice">${esc(m)}</div>`));
-      }
-    } else {
-      think.remove();
-      out.appendChild(el(`<div class="notice">Automatic analysis isn't available here. Label the thought yourself — doing it by hand teaches the pattern faster anyway.</div>`));
+Rules: one to three distortions, ordered by how strongly present, using only words that really appear in the thought. The three reframes must be genuinely different from each other in angle, not restatements. Each must be TRUE (defensible with evidence, not wishful) and must LAND (acknowledge what actually hurt rather than skip past it) — a merely cheerful line fails both tests. Set risk to "concern" only if the text suggests self-harm, suicide, or danger to someone.`;
+      try{ result = await AI.json(prompt); }
+      catch(err){ error = err; }
     }
-    btn.disabled = false;
     think.remove();
+    btn.disabled = false;
 
-    if(result?.risk === "concern" && !out.querySelector(".notice.care")){
-      out.insertBefore(crisisCard(), out.firstChild);
-    }
+    if(result?.risk === "concern") out.insertBefore(crisisCard(), out.firstChild);
+
+    if(error) out.appendChild(aiErrorCard(error));
+    if(!AI) out.appendChild(el(`<div class="notice">Automatic analysis isn't switched on. Add a free Groq key in Settings, or label the thought yourself below.</div>`));
+
     out.appendChild(buildAnalysis(draft, result));
     out.querySelector("[data-anchor]")?.scrollIntoView({behavior:"smooth",block:"start"});
   };
@@ -656,24 +654,19 @@ Rules: between one and three distortions, ordered by how strongly present. Quote
 };
 
 function buildAnalysis(draft, r){
-  const box = el(`<div data-anchor></div>`);
-
-  if(r?.empathy){
-    box.appendChild(el(`<div class="card reveal"><p class="serifbody" style="margin:0">${esc(r.empathy)}</p></div>`));
-  }
-
-  /* distortions — AI-proposed, user-editable */
-  const dcard = el(`<div class="card reveal"><div class="step"><div class="step-n">4</div><div class="step-b">
-    <h3>What's distorted in it</h3>
-    <p class="muted" style="margin-bottom:14px">These are proposals, not verdicts. Untick anything that doesn't fit, and add what's missing — you know the thought better than any analysis does.</p>
-    <div id="dlist"></div>
-    <hr class="sep">
-    <label class="fl">All categories</label>
-    <div class="row" id="dchips"></div>
-  </div></div></div>`);
-  const dlist = dcard.querySelector("#dlist");
+  const box = el(`<div data-anchor class="grid2" style="align-items:start"></div>`);
   const picked = new Set((r?.distortions||[]).map(d=>d.id).filter(id=>DISTORTIONS.some(x=>x.id===id)));
 
+  /* ── left column: what's happening in the thought ───────── */
+  const left = el(`<div class="card reveal">
+    <h3>What's happening in this thought</h3>
+    <div id="dlist" style="margin-top:10px"></div>
+    <hr class="sep">
+    <label class="fl">All categories — tap to add or remove</label>
+    <div class="row" id="dchips"></div>
+    <div id="corebox"></div>
+  </div>`);
+  const dlist = left.querySelector("#dlist");
   (r?.distortions||[]).forEach(d=>{
     const meta = DISTORTIONS.find(x=>x.id===d.id); if(!meta) return;
     dlist.appendChild(el(`<div class="dist">
@@ -685,7 +678,7 @@ function buildAnalysis(draft, r){
   if(!dlist.children.length){
     dlist.appendChild(el(`<p class="muted" style="margin:0 0 4px">Pick the categories that fit. Most thoughts contain two or three.</p>`));
   }
-  const chipwrap = dcard.querySelector("#dchips");
+  const chipwrap = left.querySelector("#dchips");
   DISTORTIONS.forEach(d=>{
     const ch = el(`<button class="chip" aria-pressed="${picked.has(d.id)}" title="${esc(d.def)}">${esc(d.name)}</button>`);
     ch.onclick = ()=>{
@@ -695,106 +688,73 @@ function buildAnalysis(draft, r){
     };
     chipwrap.appendChild(ch);
   });
-  box.appendChild(dcard);
-
-  /* core belief */
   if(r?.core){
     const cb = CORE_BELIEFS.find(b=>b.id===r.core.id);
-    if(cb) box.appendChild(el(`<div class="card reveal">
-      <div class="step"><div class="step-n">5</div><div class="step-b">
-      <h3>The belief underneath</h3>
-      <p class="muted" style="margin-bottom:12px">A single thought is the tip. This is the rule it seems to be serving — and the rule is what keeps generating new versions of the thought.</p>
+    if(cb) left.querySelector("#corebox").appendChild(el(`
+      <hr class="sep">
+      <label class="fl">The belief underneath</label>
       <div class="dist"><h3>${esc(cb.name)}</h3>
-        <p style="margin:0;font-size:14.5px;color:var(--ink-2)">${esc(r.core.why||cb.def)}</p></div>
-      </div></div></div>`));
+        <p style="margin:0;font-size:14.5px;color:var(--ink-2)">${esc(r.core.why||cb.def)}</p></div>`));
   }
+  box.appendChild(left);
 
-  /* socratic + methods */
-  const qs = r?.socratic?.length ? r.socratic
-    : [...picked].map(id=>DISTORTIONS.find(d=>d.id===id)?.ask).filter(Boolean).slice(0,3);
-  const meth = (r?.methods||["evidence","double"]).map(id=>METHODS.find(m=>m.id===id)).filter(Boolean);
-
-  const qcard = el(`<div class="card reveal"><div class="step"><div class="step-n">6</div><div class="step-b">
-    <h3>Questions worth answering honestly</h3>
-    <p class="muted" style="margin-bottom:12px">Answer them in your head or on paper. Don't rush past the one that stings — that's usually the load-bearing one.</p>
-    <ol class="serifbody" style="padding-left:20px;margin:0 0 16px">${
-      (qs.length?qs:["What would you need to see to know this thought was false?"])
-      .map(q=>`<li style="margin-bottom:8px">${esc(q)}</li>`).join("")}</ol>
-    <label class="fl">Methods that fit this thought</label>
-    <div id="mlist"></div>
-  </div></div></div>`);
-  const ml = qcard.querySelector("#mlist");
-  (meth.length?meth:METHODS.slice(0,3)).forEach(m=>{
-    ml.appendChild(el(`<details class="method"><summary>${esc(m.name)}</summary><p>${esc(m.how)}</p></details>`));
-  });
-  box.appendChild(qcard);
-
-  /* reframe */
-  const rcard = el(`<div class="card reveal"><div class="step"><div class="step-n">7</div><div class="step-b">
-    <h3>Write the truer version</h3>
-    <p class="muted" style="margin-bottom:10px">Two tests, both required. It has to be <b>true</b> — you'd defend it with evidence. And it has to <b>land</b> — reading it actually changes something. A sentence that passes only the first test is a slogan.</p>
-    <textarea id="reframe" rows="4" placeholder="They skipped my update because the agenda ran over, and that's happened to three other people this month. I'd still rather it hadn't. It isn't evidence that I'm invisible — it's evidence that the meeting was badly run."></textarea>
-    <div class="row" style="margin-top:12px">
-      <button class="btn ghost sm" id="critique" data-ai-dep>Pressure-test it</button>
-      <span class="muted">Optional — checks whether it's genuine or just positive.</span>
-    </div>
-    <div id="crit" style="margin-top:12px"></div>
-    <hr class="sep">
-    <label class="fl">Now, how much do you believe the original thought?</label>
-    <div id="after"></div>
-    <div class="sl-lab"><span>not at all</span><span>completely</span></div>
-    <button class="btn" id="finish">Save this record</button>
-  </div></div></div>`);
-  let after = draft.before;
-  rcard.querySelector("#after").appendChild(slider("Belief now", draft.before, v => after = v));
-  rcard.querySelector("#critique").onclick = async ()=>{
-    const text = rcard.querySelector("#reframe").value.trim();
-    const slot = rcard.querySelector("#crit");
-    if(!text){ rcard.querySelector("#reframe").focus(); return; }
-    if(!AI){ slot.innerHTML=""; slot.appendChild(el(`<div class="notice" style="margin:0">${esc(aiMsg("not_granted"))}</div>`)); return; }
-    slot.innerHTML = ""; slot.appendChild(thinkingEl("Testing it…"));
-    try{
-      const v = await AI.json(
-`Inside a CBT tool. Original negative thought: "${draft.thought}"
-The user's reframed version: "${text}"
-
-Judge the reframe on two criteria used in cognitive therapy: is it TRUE (defensible with evidence, not wishful), and does it REDUCE the feeling (it acknowledges what genuinely hurt rather than skipping past it). A reframe that is merely cheerful fails. A reframe that just re-states the criticism more politely also fails.
-
-Reply with ONLY JSON:
-{"true_score":0-100,"lands_score":0-100,"verdict":"<one sentence, warm, direct, second person>","sharpen":"<a rewritten version of THEIR sentence, keeping their voice and their facts, that scores higher on whichever criterion was weaker — or empty string if theirs is already strong>"}`,
-      );
-      slot.innerHTML = "";
-      const avg = Math.round(((+v.true_score||0)+(+v.lands_score||0))/2);
-      slot.appendChild(el(`<div class="card flat" style="margin:0;background:var(--surface-2)">
-        <div class="row" style="margin-bottom:8px">
-          <span class="tag ${avg>=70?"calm":"hot"}">${avg>=70?"holds up":"needs work"}</span>
-          <span class="muted">true ${+v.true_score||0} · lands ${+v.lands_score||0}</span>
-        </div>
-        <p style="margin:0 0 ${v.sharpen?"10px":"0"};font-size:15px">${esc(v.verdict||"")}</p>
-        ${v.sharpen? `<p class="serifbody" style="margin:0;color:var(--ink-2)">${esc(v.sharpen)}</p>
-        <button class="btn ghost sm" style="margin-top:10px" id="useit">Use this wording</button>`:""}
-      </div>`));
-      const u = slot.querySelector("#useit");
-      if(u) u.onclick = ()=>{ rcard.querySelector("#reframe").value = v.sharpen; u.disabled = true; u.textContent="Applied"; };
-    }catch(err){
-      slot.innerHTML = "";
-      const m = aiMsg(err.code);
-      if(m) slot.appendChild(el(`<div class="notice" style="margin:0">${esc(m)}</div>`));
-    }
+  /* ── right column: reframed versions ─────────────────────── */
+  const right = el(`<div class="card reveal">
+    <h3>Reframed</h3>
+    <p class="muted" style="margin:4px 0 12px">Pick the one that's both true and actually changes something when you read it — or write your own.</p>
+    <div id="rlist"></div>
+  </div>`);
+  const rlist = right.querySelector("#rlist");
+  let chosen = "";
+  const reframes = (r?.reframes||[]).filter(x=>x?.text);
+  const renderReframe = (text, note, i)=>{
+    const card = el(`<div class="list-item" style="cursor:pointer;margin-bottom:10px">
+      <p class="serifbody" style="margin:0 0 6px">${esc(text)}</p>
+      ${note? `<p class="muted" style="margin:0">${esc(note)}</p>`:""}
+    </div>`);
+    card.onclick = ()=>{
+      rlist.querySelectorAll(".list-item").forEach(x=>{ x.style.borderColor="var(--line)"; x.style.background="var(--surface)"; });
+      card.style.borderColor = "var(--accent)"; card.style.background = "var(--accent-soft)";
+      chosen = text;
+      own.value = text;
+    };
+    return card;
   };
+  reframes.forEach((rf,i)=> rlist.appendChild(renderReframe(rf.text, rf.note, i)));
+  if(!reframes.length){
+    rlist.appendChild(el(`<p class="muted" style="margin:0 0 10px">Write your own truer version below. It has to be true — you'd defend it with evidence — and it has to land, meaning reading it actually changes something.</p>`));
+  }
+  const ownWrap = el(`<div style="margin-top:${reframes.length?"14px":"0"}">
+    <label class="fl">${reframes.length?"Or write your own":"Your version"}</label>
+    <textarea id="own" rows="3" placeholder="Write a version you'd actually defend with evidence."></textarea>
+  </div>`);
+  right.appendChild(ownWrap);
+  const own = ownWrap.querySelector("#own");
+  own.oninput = ()=>{ chosen = own.value.trim();
+    rlist.querySelectorAll(".list-item").forEach(x=>{ x.style.borderColor="var(--line)"; x.style.background="var(--surface)"; }); };
 
-  rcard.querySelector("#finish").onclick = ()=>{
-    draft.reframe = rcard.querySelector("#reframe").value.trim();
+  right.appendChild(el(`<hr class="sep">`));
+  right.appendChild(el(`<label class="fl">Now, how much do you believe the original thought?</label>`));
+  const afterWrap = el(`<div></div>`);
+  let after = draft.before;
+  afterWrap.appendChild(slider("Belief now", draft.before, v => after = v));
+  right.appendChild(afterWrap);
+  right.appendChild(el(`<div class="sl-lab"><span>not at all</span><span>completely</span></div>`));
+  const finish = el(`<button class="btn" style="margin-top:4px">Save this record</button>`);
+  finish.onclick = ()=>{
+    draft.reframe = (chosen || own.value).trim();
     draft.after = after;
     draft.distortions = [...picked].map(id=>({id, name:DISTORTIONS.find(d=>d.id===id)?.name||id}));
     draft.core = r?.core?.id || null;
     draft.ts = Date.now(); draft.id = uid(); draft.date = today();
     S.records.unshift(draft);
-    S.moods.push({date:today(), ts:Date.now(), emotions:draft.emotions, belief:{before:draft.before, after}});
+    S.moods.push({date:today(), ts:Date.now(), emotions:{}, belief:{before:draft.before, after}});
     save();
     go("aftermath", draft.id);
   };
-  box.appendChild(rcard);
+  right.appendChild(finish);
+  box.appendChild(right);
+
   return box;
 }
 
@@ -1235,11 +1195,23 @@ SCREENS.settings = ()=>{
       <p>The app can read your thought and suggest which distortions are in it. That needs a model key. Groq gives one away free at <b>console.groq.com/keys</b> \u2014 sign in, create a key, paste it here. It is stored only in this browser and sent only to Groq.</p>
       <div class="row"><input type="text" id="k" placeholder="gsk_\u2026" value="${esc(S.settings.key||"")}" style="flex:1;min-width:180px">
       <button class="btn sm" id="ks">Save key</button></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost sm" id="kt">Test connection</button></div>
+      <div id="ktout" style="margin-top:10px"></div>
       <p class="muted" style="margin:12px 0 0">Everything still works without a key \u2014 you label the thought yourself, which teaches the pattern faster anyway.</p></div>`);
     k.querySelector("#ks").onclick = ()=>{
       S.settings.key = k.querySelector("#k").value.trim();
       save(); refreshAI();
       const b = k.querySelector("#ks"); b.textContent = S.settings.key ? "Saved" : "Cleared"; b.disabled = true;
+    };
+    k.querySelector("#kt").onclick = async ()=>{
+      S.settings.key = k.querySelector("#k").value.trim(); save(); refreshAI();
+      const slot = k.querySelector("#ktout");
+      slot.innerHTML = ""; slot.appendChild(thinkingEl("Checking…"));
+      const res = await MODEL.test();
+      slot.innerHTML = "";
+      slot.appendChild(res.ok
+        ? el(`<div class="notice" style="border-color:var(--calm);background:var(--calm-soft)">Connected \u2014 analysis is working.</div>`)
+        : el(`<div class="notice care" style="color:var(--ink)"><b>Couldn't connect.</b><br><span style="font-family:monospace;font-size:12.5px">${esc(res.detail)}</span></div>`));
     };
     c.appendChild(k);
   }
