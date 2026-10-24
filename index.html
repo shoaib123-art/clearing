@@ -217,6 +217,122 @@ details.method[open] summary::before{content:"–"}
 details.method p{margin:10px 0 0;font-size:14.5px;color:var(--ink-2)}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:8px;top:8px;z-index:99;background:var(--surface);padding:8px 14px;border-radius:8px}
+
+/* ══ v2 additions ═══════════════════════════════════════════ */
+.navsep{margin:12px 10px 4px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.morebtn{display:none}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-2);margin:0 0 10px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+.tabs .chip{white-space:nowrap;padding:8px 14px;font-size:13.5px}
+
+/* intro overlay */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(14,26,34,.58);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  display:grid;place-items:center;overflow-y:auto;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 14px calc(14px + env(safe-area-inset-bottom,0px))}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);width:100%;max-width:580px;
+  padding:28px 26px;box-shadow:0 30px 80px -30px rgba(0,0,0,.55);max-height:100%;overflow-y:auto}
+@media(max-width:520px){.sheet{padding:22px 18px}}
+
+/* triangle */
+.tri-grid{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:18px;align-items:center}
+@media(max-width:640px){.tri-grid{grid-template-columns:1fr}.tri-svg{max-width:300px;margin:0 auto}}
+.tri-event{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-s);padding:10px 12px;font-size:14.5px;margin-top:6px}
+.tri-row{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.45}
+.tri-row:last-child{border-bottom:0}
+.tri-row b{color:var(--tri,var(--accent-2));font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding-top:3px}
+.tri-tag{margin:14px 0 0;color:var(--ink-2);font-size:17px;max-width:none}
+
+/* four moves */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.flow{grid-template-columns:1fr}}
+.flow-step{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-m);padding:14px}
+.flow-step p{font-size:13.5px;color:var(--ink-2);margin:0}
+.flow-n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:13px;font-weight:700;margin-bottom:8px}
+
+/* principles */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:620px){.pgrid{grid-template-columns:1fr}}
+.pr{display:flex;gap:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-m);padding:13px}
+.pr .n{flex:0 0 26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent-2);display:grid;place-items:center;font-size:13px;font-weight:700}
+.pr h3{margin:0 0 3px;font-size:14.5px}
+.pr p{margin:0;font-size:13.5px;color:var(--ink-2)}
+
+/* ten distortions */
+.tengrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:640px){.tengrid{grid-template-columns:1fr}}
+.tencard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;box-shadow:var(--shadow)}
+.tencard .bar{height:5px;background:var(--c,var(--accent))}
+.tencard .in{padding:14px 15px 16px}
+.tenhead{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.tenico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;flex:0 0 44px;color:var(--c,var(--accent-2));background:var(--accent-soft);background:color-mix(in srgb,var(--c,var(--accent)) 14%,var(--surface))}
+.tenico svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tennum{font-size:11.5px;font-weight:700;color:var(--ink-3);letter-spacing:.07em}
+.tencard h3{margin:0;font-size:15.5px;line-height:1.25}
+.tensay{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:16px;line-height:1.45;color:var(--ink-2);margin:0 0 10px;border-left:3px solid var(--line);padding-left:11px;max-width:none}
+.tenfix{font-size:13.5px;color:var(--ink);margin:0;max-width:none}
+.tenfix b{color:var(--c,var(--accent-2))}
+
+/* choice buttons (quiz, check-in) */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opts.four{grid-template-columns:repeat(4,1fr)}
+@media(max-width:620px){.opts,.opts.four{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.opts,.opts.four{grid-template-columns:1fr}}
+.opt{padding:11px 12px;text-align:left;border:1px solid var(--line);border-radius:var(--radius-s);background:var(--surface);color:var(--ink);font:inherit;font-size:14px;line-height:1.35;cursor:pointer}
+.opt:hover{background:var(--surface-2)}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-2);font-weight:600}
+.opt.right{border-color:var(--calm);background:var(--calm-soft);color:var(--ink)}
+.opt.wrong{border-color:var(--hot);background:var(--hot-soft);color:var(--ink)}
+.opt[disabled]{cursor:default}
+
+/* topics */
+.topic{display:flex;gap:14px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:var(--radius-m);background:var(--surface);margin-bottom:10px}
+.topic .n{flex:0 0 30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent-2);display:grid;place-items:center;font-weight:700;font-size:13px}
+.topic h3{margin:0 0 3px;font-size:15px}
+.topic p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+
+/* breathing */
+.breath{display:flex;flex-direction:column;align-items:center;gap:8px;margin:8px 0 14px}
+.orbwrap{height:200px;width:100%;display:grid;place-items:center}
+.orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--accent-soft),var(--accent));transform:scale(.55);transition:transform 4s ease-in-out;opacity:.95;box-shadow:0 0 0 10px var(--accent-soft)}
+.blabel{font-weight:600;font-size:18px;color:var(--ink);min-height:28px}
+
+/* tiles on Today */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tile{text-align:left;padding:14px;border:1px solid var(--line);border-radius:var(--radius-m);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:3px;box-shadow:var(--shadow)}
+.tile:hover{background:var(--surface-2)}
+.tile b{font-size:15px}
+.tile span{font-size:12.5px;color:var(--ink-3)}
+
+/* score */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.score b{font-family:Newsreader,Georgia,serif;font-weight:400;font-size:52px;line-height:1}
+.score span{color:var(--ink-3)}
+.qn{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.07em;margin-bottom:4px}
+
+/* chat */
+.chatwrap{display:flex;flex-direction:column;height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:420px}
+@media(max-width:860px){.chatwrap{height:calc(100vh - 205px);height:calc(100dvh - 205px)}}
+.chat-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+.chat-hd h1{font-size:28px;margin:0}
+.msgs{flex:1;overflow-y:auto;padding:4px 2px 12px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;padding:11px 15px;border-radius:18px;font-size:15.5px;line-height:1.55;word-wrap:break-word;overflow-wrap:anywhere}
+.msg p{margin:0 0 8px;max-width:none}
+.msg p:last-child{margin:0}
+.msg ul,.msg ol{margin:4px 0 8px;padding-left:20px}
+.msg li{margin-bottom:3px}
+.msg.bot{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:6px;box-shadow:var(--shadow)}
+.msg.me{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:6px}
+.composer{display:flex;gap:10px;align-items:flex-end;padding-top:10px;border-top:1px solid var(--line)}
+.composer textarea{min-height:46px;max-height:140px;font-family:Figtree,"Segoe UI",system-ui,sans-serif;font-size:15.5px;line-height:1.4;resize:none;border-radius:22px;padding:11px 16px}
+.starters{display:flex;gap:8px;flex-wrap:wrap}
+.starters .chip{text-align:left}
+
+@media (max-width:860px){
+  .navbtn{min-width:0;flex:1}
+  .navbtn.sec,.navsep{display:none}
+  .morebtn{display:flex}
+}
 </style>
 </head>
 <body>
@@ -225,13 +341,18 @@ details.method p{margin:10px 0 0;font-size:14.5px;color:var(--ink-2)}
   <nav class="rail" aria-label="Sections">
     <div class="brand"><b>Clearing</b><span>cognitive therapy</span></div>
     <button class="navbtn" data-go="home"><span class="gl">◑</span>Today</button>
-    <button class="navbtn" data-go="record"><span class="gl">✎</span>Thought</button>
-    <button class="navbtn" data-go="activate"><span class="gl">◈</span>Activate</button>
-    <button class="navbtn" data-go="expose"><span class="gl">▲</span>Exposure</button>
-    <button class="navbtn" data-go="rumination"><span class="gl">◌</span>Unstick</button>
-    <button class="navbtn" data-go="library"><span class="gl">☰</span>Library</button>
-    <button class="navbtn" data-go="progress"><span class="gl">◔</span>Progress</button>
-    <button class="navbtn" data-go="settings"><span class="gl">⚙</span>Settings</button>
+    <button class="navbtn" data-go="chat"><span class="gl">✦</span>Chat</button>
+    <button class="navbtn" data-go="record"><span class="gl">✎</span>Reframe</button>
+    <button class="navbtn" data-go="journal"><span class="gl">▤</span>Journal</button>
+    <button class="navbtn" data-go="learn"><span class="gl">☰</span>Learn</button>
+    <div class="navsep">Tools</div>
+    <button class="navbtn sec" data-go="checkin"><span class="gl">◐</span>Check-in</button>
+    <button class="navbtn sec" data-go="activate"><span class="gl">◈</span>Activate</button>
+    <button class="navbtn sec" data-go="expose"><span class="gl">▲</span>Exposure</button>
+    <button class="navbtn sec" data-go="rumination"><span class="gl">◌</span>Unstick</button>
+    <button class="navbtn sec" data-go="progress"><span class="gl">◔</span>Progress</button>
+    <button class="navbtn sec" data-go="settings"><span class="gl">⚙</span>Settings</button>
+    <button class="navbtn morebtn" data-go="more"><span class="gl">⋯</span>More</button>
     <div class="rail-foot">Everything you write stays in this browser. Nothing is uploaded.</div>
   </nav>
   <main id="main"><div class="wrap" id="view"></div></main>
@@ -337,6 +458,7 @@ const DEFAULT = {
   account:null,
   settings:{theme:"daylight", serif:true, ai:true, key:""},
   records:[], moods:[], activities:[], ladders:[], unstick:[], parked:[],
+  intro:false, logs:[], procr:[], journal:[], assess:[], chat:[],
   created:Date.now()
 };
 let S = load();
@@ -381,23 +503,37 @@ function parseLoose(txt){
   const err = new Error("no json"); err.code = "invalid_json"; throw err;
 }
 
-async function callOnce(model, prompt, headers, useProxy){
-  const res = await fetch(useProxy ? PROXY_URL : GROQ_URL, {
-    method:"POST", headers,
-    body: JSON.stringify({
-      model, temperature: 0.4, max_tokens: 1300,
-      response_format: {type:"json_object"},
-      messages:[
-        {role:"system", content:"You are a careful assistant inside a cognitive behavioural therapy self-help tool. You never diagnose. You reply with a single valid JSON object only — no prose, no markdown code fences, no text before or after the JSON."},
-        {role:"user", content: prompt}
-      ]
-    })
-  });
+const SYS_JSON = "You are a careful assistant inside a cognitive behavioural therapy self-help tool. You never diagnose. You reply with a single valid JSON object only — no prose, no markdown code fences, no text before or after the JSON.";
+
+const CHAT_SYSTEM = `You are "Clearing", a warm, plain-spoken CBT coach inside a self-help app. You help the user examine and reframe distressing thoughts using established cognitive behavioural techniques, in the style popularised by Dr. David Burns (Feeling Good, T.E.A.M.-CBT): empathy first, then testing the thought.
+
+How to respond:
+- Begin by reflecting the feeling and what hurts, briefly and genuinely, before any technique. Never rush to reassure.
+- Name the likely thinking errors in the user's own words, using this list: all-or-nothing thinking, overgeneralisation, mental filter, discounting the positive, mind reading, fortune telling, magnification/minimisation, emotional reasoning, should statements, labelling, personalisation/blame. Explain each in one plain sentence. Say "this sounds like", never "you have".
+- Ask ONE good Socratic question at a time, one the user can answer from facts they already know. Never stack questions.
+- Once the user has engaged, offer two or three alternative, balanced thoughts. Each must be TRUE (defensible with evidence) and must acknowledge what actually hurt. Never toxic positivity, never "just think positive".
+- Where it fits, suggest one concrete method (examine the evidence, double standard, shades of grey, experiment, cost-benefit, reattribution) and one small action (an activity to schedule or an exposure step).
+- Invite the user to rate their belief in the thought from 0 to 100 before and after.
+- Keep replies under about 170 words unless asked for more. Plain language. Light formatting only: short paragraphs, occasional bold, short lists.
+- You are not a therapist. You cannot diagnose, or give medical or medication advice; if asked, say so kindly and suggest a doctor or counsellor.
+- SAFETY: if the user mentions suicide, self-harm, abuse, or being in danger, stop the CBT work. Respond with warmth, say you're concerned, encourage them to contact someone right now (a trusted person, their local emergency number, or a helpline — findahelpline.com lists one for any country; in Pakistan, Umang 0311-7786264), and ask if they are safe. Do not argue with them and never give methods.
+- Stay on topic: thoughts, feelings, behaviour, mood, worry, relationships, coping. Politely decline unrelated tasks.
+- Reply in the same language the user writes in.`;
+
+async function groqRequest(model, messages, o, headers){
+  const base = {model, temperature: (o.temperature != null ? o.temperature : 0.4), max_tokens: o.maxTokens || 1600, messages};
+  const full = Object.assign({}, base);
+  if(o.json) full.response_format = {type:"json_object"};
+  if(String(model).indexOf("gpt-oss") > -1) full.reasoning_effort = "low";
+  const post = body => fetch(PROXY_URL || GROQ_URL, {method:"POST", headers, body:JSON.stringify(body)});
+  let res = await post(full);
+  // Some models reject optional fields; retry once with the plain request.
+  if(res.status === 400 && (full.response_format || full.reasoning_effort)) res = await post(base);
   if(!res.ok){
     let detail = "";
-    try{ const j = await res.json(); detail = j?.error?.message || JSON.stringify(j).slice(0,300); }
+    try{ const j = await res.json(); detail = (j && j.error && j.error.message) || JSON.stringify(j).slice(0,300); }
     catch(e){ try{ detail = (await res.text()).slice(0,300); }catch(e2){} }
-    const e = new Error("http "+res.status);
+    const e = new Error("http " + res.status);
     e.status = res.status; e.detail = detail;
     e.code = res.status===401 ? "not_granted"
            : res.status===429 ? "rate_limited"
@@ -405,42 +541,46 @@ async function callOnce(model, prompt, headers, useProxy){
     throw e;
   }
   const data = await res.json();
-  const txt = data?.choices?.[0]?.message?.content ?? "";
-  return parseLoose(txt);
+  const msg = data && data.choices && data.choices[0] && data.choices[0].message;
+  return String((msg && msg.content) || "").replace(/<think>[\s\S]*?<\/think>/g, "").trim();
+}
+
+async function runModels(messages, o){
+  const key = (S.settings.key || "").trim();
+  if(!PROXY_URL && !key){ const e = new Error("No key saved yet."); e.code = "not_granted"; throw e; }
+  const headers = {"Content-Type":"application/json"};
+  if(!PROXY_URL) headers["Authorization"] = "Bearer " + key;
+  let lastErr = null;
+  for(const m of GROQ_MODELS){
+    try{
+      const txt = await groqRequest(m, messages, o, headers);
+      if(!txt){ const e = new Error("The model returned an empty reply."); e.code = "invalid_json"; e.detail = "Empty reply from " + m; throw e; }
+      return o.json ? parseLoose(txt) : txt;
+    }catch(err){
+      if(!err.code){ err.code = "upstream_error"; err.detail = err.detail || err.message || "Network error"; }
+      if(err.code === "not_granted" || err.code === "rate_limited") throw err; // another model won't help
+      lastErr = err;
+    }
+  }
+  throw lastErr || Object.assign(new Error("offline"), {code:"upstream_error"});
 }
 
 const MODEL = {
-  async json(prompt){
-    const key = (S.settings.key||"").trim();
-    const useProxy = !!PROXY_URL;
-    if(!useProxy && !key){ const e=new Error("no key"); e.code="not_granted"; throw e; }
-    const headers = {"Content-Type":"application/json"};
-    if(!useProxy) headers["Authorization"] = "Bearer " + key;
-    const models = useProxy ? [null] : GROQ_MODELS;
-    let lastErr = null;
-    for(const m of models){
-      try{
-        return await callOnce(m, prompt, headers, useProxy);
-      }catch(err){
-        if(err.code === "not_granted" || err.code === "rate_limited"){ throw err; } // no point retrying with another model
-        lastErr = err;
-      }
-    }
-    if(lastErr) throw lastErr;
-    const e = new Error("offline"); e.code = "upstream_error"; throw e;
+  json(prompt){
+    return runModels([{role:"system", content:SYS_JSON}, {role:"user", content:prompt}], {json:true, maxTokens:2200});
   },
-  /* Quick connectivity check, used by the Settings "Test key" button. */
+  chat(history, risk){
+    const msgs = history.slice(-20).map(m=>({role:m.role, content:m.content}));
+    const sys = CHAT_SYSTEM + (risk ? "\n\nIMPORTANT: the user's latest message may indicate a risk of self-harm. Follow the SAFETY rule now: set CBT work aside, respond with warmth, express concern, encourage reaching out to someone right now, and ask whether they are safe." : "");
+    return runModels([{role:"system", content:sys}].concat(msgs), {temperature:0.6, maxTokens:1600});
+  },
+  /* Quick connectivity check for the Settings "Test connection" button. */
   async test(){
-    const key = (S.settings.key||"").trim();
-    const useProxy = !!PROXY_URL;
-    if(!useProxy && !key) return {ok:false, detail:"No key saved yet."};
-    const headers = {"Content-Type":"application/json"};
-    if(!useProxy) headers["Authorization"] = "Bearer " + key;
     try{
-      await callOnce(useProxy ? null : GROQ_MODELS[0], "Reply with only this JSON object: {\"ok\":true}", headers, useProxy);
+      await runModels([{role:"system", content:SYS_JSON}, {role:"user", content:'Reply with only this JSON object: {"ok":true}'}], {json:true, maxTokens:600});
       return {ok:true};
     }catch(err){
-      return {ok:false, detail: (err.detail || err.message || "Unknown error") + (err.status? " (HTTP "+err.status+")":"") };
+      return {ok:false, detail:(err.detail || err.message || "Unknown error") + (err.status ? " (HTTP " + err.status + ")" : "")};
     }
   }
 };
@@ -473,10 +613,13 @@ function riskFlagged(text){
 /* ── router ─────────────────────────────────────────────── */
 const SCREENS = {};
 let current = "home";
+const cleanups = [];
+const SEC = new Set(["checkin","activate","expose","rumination","progress","settings"]);
 function go(name, arg){
+  cleanups.splice(0).forEach(f=>{ try{ f(); }catch(e){} });
   current = name;
   document.querySelectorAll(".navbtn").forEach(b=>
-    b.setAttribute("aria-current", b.dataset.go===name ? "page" : "false"));
+    b.setAttribute("aria-current", (b.dataset.go===name || (b.dataset.go==="more" && SEC.has(name))) ? "page" : "false"));
   const v = document.getElementById("view");
   v.innerHTML = "";
   v.appendChild(SCREENS[name](arg));
@@ -542,6 +685,15 @@ SCREENS.home = ()=>{
   </div>`);
   start.querySelectorAll("[data-a]").forEach(b=> b.onclick=()=> go(b.dataset.a));
   c.appendChild(start);
+
+  const tiles = el(`<div class="tiles">
+    <button class="tile" data-a="chat"><b>Talk it through</b><span>Chat with a CBT coach</span></button>
+    <button class="tile" data-a="journal"><b>Mood log</b><span>The full written sheet</span></button>
+    <button class="tile" data-a="checkin"><b>Check-in</b><span>Depression &amp; anxiety scores</span></button>
+    <button class="tile" data-a="learn"><b>Learn</b><span>Triangle, 10 distortions, more</span></button>
+  </div>`);
+  tiles.querySelectorAll("[data-a]").forEach(b=> b.onclick = ()=> go(b.dataset.a));
+  c.appendChild(tiles);
 
   const due = S.activities.filter(a=>!a.done);
   if(due.length){
@@ -1041,37 +1193,6 @@ SCREENS.rumination = ()=>{
   return c;
 };
 
-/* ═══ SCREEN: Library ═══════════════════════════════════ */
-SCREENS.library = ()=>{
-  const c = el(`<div></div>`);
-  c.appendChild(el(`<h1>Library</h1>`));
-  c.appendChild(el(`<p class="lede">The whole method in one place. Worth reading once end to end, then returning to whichever part you're using.</p>`));
-
-  const d = el(`<div class="card"><h2>The distortions</h2>
-    <p class="muted" style="margin-bottom:16px">Almost every painful thought is distorted in at least one of these ways. Learning to spot them by name is most of the skill.</p></div>`);
-  DISTORTIONS.forEach(x=> d.appendChild(el(
-    `<details class="method"><summary>${esc(x.name)}</summary><p>${esc(x.def)}</p>
-     <p style="color:var(--accent-2);font-weight:500">${esc(x.ask)}</p></details>`)));
-  c.appendChild(d);
-
-  const m = el(`<div class="card"><h2>Ways to answer a thought</h2>
-    <p class="muted" style="margin-bottom:16px">One method rarely does it. Stack two or three on the same thought and watch which one actually moves the number.</p></div>`);
-  METHODS.forEach(x=> m.appendChild(el(
-    `<details class="method"><summary>${esc(x.name)}</summary><p>${esc(x.how)}</p></details>`)));
-  c.appendChild(m);
-
-  const b = el(`<div class="card"><h2>Core beliefs</h2>
-    <p class="muted" style="margin-bottom:16px">The rules underneath the thoughts. You don't argue with these directly — you gather evidence against them, one thought record at a time, until the rule can't hold its own weight.</p></div>`);
-  CORE_BELIEFS.forEach(x=> b.appendChild(el(
-    `<details class="method"><summary>${esc(x.name)}</summary><p>${esc(x.def)}</p></details>`)));
-  c.appendChild(b);
-
-  c.appendChild(el(`<div class="card flat"><h2>What this is and isn't</h2>
-    <p>These are established cognitive and behavioural techniques, drawn from the published clinical literature and the standard self-help practice built on it. They're effective, and they work best when you do them repeatedly rather than once.</p>
-    <p style="margin:0">This is not therapy and it is not a therapist. It can't see you, can't tell when something's getting worse, and can't hold anything. If your mood has been low for weeks, if you're not sleeping, or if you've had thoughts of hurting yourself, the right next step is a person — a GP, a psychologist, a helpline.</p></div>`));
-  return c;
-};
-
 /* ═══ SCREEN: Progress ══════════════════════════════════ */
 SCREENS.progress = ()=>{
   const c = el(`<div></div>`);
@@ -1170,6 +1291,12 @@ SCREENS.settings = ()=>{
   });
   c.appendChild(t);
 
+  const ri = el(`<div class="card"><h2>Introduction</h2>
+    <p class="muted" style="margin-bottom:12px">Replay the opening message and the CBT triangle.</p>
+    <button class="btn ghost sm">Replay introduction</button></div>`);
+  ri.querySelector("button").onclick = showIntro;
+  c.appendChild(ri);
+
   const acc = el(`<div class="card"><h2>Your account</h2></div>`);
   if(S.account){
     acc.appendChild(el(`<p>Signed in as <b>${esc(S.account.email)}</b>. Every feature is unlocked — there is no paid tier and there won't be one.</p>`));
@@ -1232,7 +1359,7 @@ SCREENS.settings = ()=>{
   };
   data.querySelector("#wipe").onclick = ()=>{
     if(!confirm("Erase every record, ladder, and scheduled activity? This can't be undone.")) return;
-    S = structuredClone(DEFAULT); S.settings.theme = document.documentElement.dataset.theme;
+    const keepKey = S.settings.key; S = structuredClone(DEFAULT); S.settings.theme = document.documentElement.dataset.theme; S.settings.key = keepKey; S.intro = true;
     save(); go("home");
   };
   c.appendChild(data);
@@ -1243,10 +1370,984 @@ SCREENS.settings = ()=>{
   return c;
 };
 
+/* ═══════════════════════════════════════════════════════════
+   v2 — intro, CBT triangle, Learn, Journal sheets, Check-in, Chat
+   ═══════════════════════════════════════════════════════════ */
+let _uid = 0;
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function tabBar(tabs, current, onPick){
+  const bar = el(`<div class="tabs"></div>`);
+  tabs.forEach(([id,name])=>{
+    const b = el(`<button class="chip" aria-pressed="${id===current}">${esc(name)}</button>`);
+    b.onclick = ()=> onPick(id);
+    bar.appendChild(b);
+  });
+  return bar;
+}
+function mdLite(t){
+  const lines = esc(t).split("\n");
+  let html = "", list = null;
+  const flush = ()=>{ if(list){ html += `<${list.t}>${list.items.map(x=>`<li>${x}</li>`).join("")}</${list.t}>`; list = null; } };
+  const inline = s => s.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  for(let ln of lines){
+    ln = ln.replace(/^#{1,6}\s*/, "");
+    const ul = ln.match(/^\s*[-*•]\s+(.*)/), ol = ln.match(/^\s*\d+[.)]\s+(.*)/);
+    if(ul){ if(!list || list.t!=="ul"){ flush(); list = {t:"ul",items:[]}; } list.items.push(inline(ul[1])); }
+    else if(ol){ if(!list || list.t!=="ol"){ flush(); list = {t:"ol",items:[]}; } list.items.push(inline(ol[1])); }
+    else if(!ln.trim()){ flush(); }
+    else { flush(); html += `<p>${inline(ln)}</p>`; }
+  }
+  flush();
+  return html;
+}
+
+/* ── the CBT triangle ───────────────────────────────────── */
+const TRI = {
+  event:"You text a close friend. Two hours go by with no reply.",
+  a:{tone:"hot",
+     thought:"“They're ignoring me. I'm too much for people.”",
+     feeling:"Hurt, anxious, lonely",
+     behaviour:"You stop texting, cancel Saturday, and scroll alone.",
+     result:"Less contact — which feels like proof you were right."},
+  b:{tone:"calm",
+     thought:"“They're probably busy. If I haven't heard by tonight, I'll check in.”",
+     feeling:"Calm, a little curious",
+     behaviour:"You carry on with your day and send a light message later.",
+     result:"The friendship stays open — and so does your evening."}
+};
+function triangleSVG(id){
+  const node = (cx,cy,label)=>`<circle cx="${cx}" cy="${cy}" r="40" fill="var(--surface)" stroke="var(--tri,var(--accent))" stroke-width="2.5"/>
+    <text x="${cx}" y="${cy+5}" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink)" font-family="Figtree,sans-serif">${label}</text>`;
+  return `<svg class="chart" viewBox="0 0 360 290" role="img" aria-label="The CBT triangle: thoughts shape feelings, feelings shape behaviour, and behaviour feeds back into thoughts">
+    <defs><marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--tri,var(--accent))"/></marker></defs>
+    <g fill="none" stroke="var(--tri,var(--accent))" stroke-width="2.5" stroke-linecap="round" marker-end="url(#${id})">
+      <path d="M155 91L88 196"/><path d="M108 236L250 236"/><path d="M273 197L206 92"/>
+    </g>
+    ${node(180,52,"Thoughts")}${node(62,236,"Feelings")}${node(298,236,"Behaviour")}
+  </svg>`;
+}
+function triangleCard(opts){
+  opts = opts || {};
+  const w = el(`<div>
+    ${opts.noTitle ? "" : `<h2>The CBT triangle</h2>`}
+    <p class="muted" style="margin-bottom:6px">What you think shapes what you feel. What you feel shapes what you do. And what you do feeds the next thought.</p>
+    <div class="tri-event"><span class="tag">Same event</span>&nbsp; ${esc(TRI.event)}</div>
+    <div class="row" style="margin:12px 0">
+      <button class="chip" data-p="a" aria-pressed="true">Distorted thought</button>
+      <button class="chip" data-p="b" aria-pressed="false">Reframed thought</button>
+    </div>
+    <div class="tri-grid"><div class="tri-svg">${triangleSVG("ah"+(++_uid))}</div><div class="tri-steps"></div></div>
+    <p class="tri-tag serifbody"></p>
+  </div>`);
+  const steps = w.querySelector(".tri-steps");
+  const draw = p=>{
+    const d = TRI[p];
+    w.style.setProperty("--tri", d.tone==="hot" ? "var(--hot)" : "var(--calm)");
+    w.querySelectorAll("[data-p]").forEach(b=> b.setAttribute("aria-pressed", String(b.dataset.p===p)));
+    steps.innerHTML = [["Thought",d.thought],["Feeling",d.feeling],["Behaviour",d.behaviour],["Where it leads",d.result]]
+      .map(([k,v],i)=>`<div class="tri-row reveal" style="animation-delay:${i*70}ms"><b>${k}</b><span>${esc(v)}</span></div>`).join("");
+    w.querySelector(".tri-tag").textContent = p==="a"
+      ? "Now tap “Reframed thought” — same event, different sentence."
+      : "Same event. Different sentence. Different evening.";
+  };
+  w.querySelectorAll("[data-p]").forEach(b=> b.onclick = ()=> draw(b.dataset.p));
+  draw("a");
+  return w;
+}
+
+/* ── opening message ────────────────────────────────────── */
+function showIntro(){
+  if(document.getElementById("intro")) return;
+  const prev = document.activeElement;
+  const ov = el(`<div id="intro" class="overlay" role="dialog" aria-modal="true" aria-labelledby="intro-h"><div class="sheet"></div></div>`);
+  const sheet = ov.firstElementChild;
+  let i = 0;
+  const onKey = e=>{ if(e.key==="Escape") finish(); };
+  const finish = ()=>{
+    S.intro = true; save(); ov.remove();
+    document.removeEventListener("keydown", onKey);
+    try{ prev && prev.focus && prev.focus(); }catch(e){}
+  };
+  document.addEventListener("keydown", onKey);
+  const slides = [
+    ()=> el(`<div class="reveal">
+      <p class="eyebrow">The idea behind everything here</p>
+      <h1 id="intro-h" style="font-size:clamp(26px,6vw,34px)">When you change the way you think, you change the way you feel.</h1>
+      <p class="serifbody" style="margin-top:14px">An upsetting event doesn't hand you a feeling directly. A thought arrives first — fast, harsh, usually unnoticed — and the feeling follows it. Distorted thoughts keep low mood and anxiety going. Learning to catch them and answer back is how their grip loosens.</p>
+      <p class="muted" style="margin-bottom:22px">The central insight of cognitive therapy, as taught by Dr. David D. Burns in <i>Feeling Good</i>.</p>
+      <div class="row"><button class="btn" data-next>Show me how →</button><button class="btn quiet" data-skip>Skip</button></div></div>`),
+    ()=>{
+      const d = el(`<div class="reveal"><p class="eyebrow">How it works</p>
+        <h1 id="intro-h" style="font-size:clamp(24px,5.5vw,30px);margin-bottom:12px">Thoughts, feelings, actions — one loop.</h1></div>`);
+      d.appendChild(triangleCard({noTitle:true}));
+      d.appendChild(el(`<div class="row" style="margin-top:18px"><button class="btn" data-next>Begin</button><button class="btn quiet" data-back>← Back</button></div>`));
+      return d;
+    }
+  ];
+  const render = ()=>{
+    sheet.innerHTML = "";
+    const s = slides[i]();
+    sheet.appendChild(s);
+    s.querySelector("[data-next]").onclick = ()=>{ if(i < slides.length-1){ i++; render(); } else finish(); };
+    const sk = s.querySelector("[data-skip]"); if(sk) sk.onclick = finish;
+    const bk = s.querySelector("[data-back]"); if(bk) bk.onclick = ()=>{ i--; render(); };
+    s.querySelector("[data-next]").focus();
+    sheet.scrollTop = 0;
+  };
+  document.body.appendChild(ov);
+  render();
+}
+
+/* ═══ SCREEN: Learn ═════════════════════════════════════ */
+const COLS = ["var(--accent)","var(--hot)","var(--calm)","var(--amber)"];
+const TEN = [
+ {n:1, name:"All-or-nothing thinking", sounds:"“If it's not perfect, it's a total failure.”", fix:"Score it out of 100 and defend the number. Most “disasters” land around 40."},
+ {n:2, name:"Overgeneralisation", sounds:"“I always mess this up. Nothing ever works out.”", fix:"Count the real instances. “Always” rarely survives a tally."},
+ {n:3, name:"Mental filter", sounds:"“The whole talk was ruined by that one slide.”", fix:"List everything else that was in the frame — the other nine slides."},
+ {n:4, name:"Discounting the positive", sounds:"“They only praised me to be nice.”", fix:"Ask what you'd conclude if a friend had earned the same praise."},
+ {n:5, name:"Jumping to conclusions", sounds:"“She's bored of me.” (mind reading) · “I'll fail the interview.” (fortune telling)", fix:"Treat the guess as a hypothesis. What's the evidence? What else could explain it?"},
+ {n:6, name:"Magnification and minimisation", sounds:"“My mistake is a catastrophe; my wins were flukes.”", fix:"Use the same ruler on both. How big will this look in six months?"},
+ {n:7, name:"Emotional reasoning", sounds:"“I feel stupid, so I must be stupid.”", fix:"A feeling reports a thought, not a fact. What would you conclude without the feeling?"},
+ {n:8, name:"Should statements", sounds:"“I should be over this by now.”", fix:"Swap “should” for “I'd prefer”. Notice what truth is left."},
+ {n:9, name:"Labelling", sounds:"“I'm a loser.”", fix:"Describe the behaviour, not the person: “I made an error on that report.”"},
+ {n:10, name:"Personalisation and blame", sounds:"“The team missed the deadline — it's all on me.”", fix:"List every contributing cause, then claim only your real share."}
+];
+const TEN_ICONS = {
+ 1:'<circle cx="7.5" cy="12" r="4"/><circle cx="16.5" cy="12" r="4" fill="currentColor"/>',
+ 2:'<circle cx="6" cy="6" r="1.6"/><circle cx="12" cy="6" r="1.6"/><circle cx="18" cy="6" r="1.6"/><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/><circle cx="6" cy="18" r="1.6"/><circle cx="12" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/>',
+ 3:'<path d="M4 5h16l-6 7.5V19l-4 2v-8.5z"/>',
+ 4:'<path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8L3.6 9.6l5.8-.8z"/><path d="M4 20L20 4"/>',
+ 5:'<path d="M3 18c2-9 8-12 15-9"/><path d="M14 5.5l4.5 3.3-3.3 4.5"/>',
+ 6:'<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/><path d="M8 10.5h5M10.5 8v5"/>',
+ 7:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z"/>',
+ 8:'<circle cx="12" cy="12" r="9"/><path d="M12 7v6.5"/><path d="M12 16.8v.2"/>',
+ 9:'<path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.2"/>',
+ 10:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>'
+};
+const SPOT = [
+ {t:"I either ace this exam or I'm a failure.", a:1},
+ {t:"He didn't call back. This always happens to me.", a:2},
+ {t:"The review had ten compliments and one criticism. All I can think about is the criticism.", a:3},
+ {t:"Sure, I got the promotion, but anyone could have done it.", a:4},
+ {t:"She didn't smile at me, so she must dislike me.", a:5},
+ {t:"One small slip in that email will be remembered forever and ruin my career.", a:6},
+ {t:"I feel hopeless, so nothing is ever going to get better.", a:7},
+ {t:"I should never feel nervous in front of other people.", a:8},
+ {t:"I forgot the meeting. I'm such an idiot.", a:9},
+ {t:"My son is struggling at school. I must be a terrible parent.", a:10}
+];
+const PRINCIPLES = [
+ ["Thoughts come first","Between an event and a feeling sits a sentence you tell yourself. It's usually so fast you don't notice it — which is exactly why it runs the show."],
+ ["Feelings aren't facts","“I feel like a failure” reports a thought and a mood. It doesn't report evidence."],
+ ["Distortions are habits","Painful thinking follows a handful of predictable patterns. They're learned habits, not proof that something is wrong with you."],
+ ["Test, don't suppress","Telling yourself to stop thinking something doesn't work. Examining it does."],
+ ["Numbers make change visible","Rating belief 0–100 before and after shows you what actually moved, instead of what you hoped would."],
+ ["Action feeds mood","Waiting to feel better before acting keeps you stuck. Do a small thing first; the feeling catches up."],
+ ["Worth isn't earned","You're not the sum of your output. Chasing worth through achievement makes every setback feel like a verdict."],
+ ["Write it down","A thought on paper sits still long enough to be examined. In your head it just keeps moving."]
+];
+const TOPICS = [
+ ["Your thoughts drive your mood","Feelings come from the sentence you tell yourself about an event. Change the sentence, and the feeling follows.","record","Reframe a thought"],
+ ["Measure it, then track it","Mood can be scored. A short check-in every couple of weeks shows whether what you're doing is working.","checkin","Take a check-in"],
+ ["The Daily Mood Log","The workhorse: write the upsetting event, rate your emotions, list the automatic thoughts, name the distortions, write truer replies, then re-rate everything.","journal","Open the mood log"],
+ ["The ten distortions","Ten habitual thinking errors account for most painful thoughts. Naming them is half the cure.","learn:ten","See the ten"],
+ ["Methods for answering a thought","No single method works on every thought. The skill is trying several — evidence, the double standard, shades of grey, experiments — and keeping the one that moves the number.","learn:methods","Browse the methods"],
+ ["From do-nothing to do-something","Low mood says wait until you feel better. Action-first approaches — scheduling, predicting pleasure, graded tasks — reverse that order.","activate","Schedule something"],
+ ["Procrastination and perfectionism","Procrastination is a forecasting error plus a set of excuses. Predict the difficulty, break the task small, answer the excuses in writing, then compare prediction with reality.","journal:procr","Open the sheet"],
+ ["The self-esteem trap","Worth isn't something you earn with output. Chasing it through achievement or approval makes every setback feel like a verdict.","chat","Talk it through"],
+ ["Anger, guilt and criticism","These are fed by “should”, labelling and blame. Handling criticism calmly is a learnable skill — and the first move is understanding, not defending.","chat","Talk it through"],
+ ["Anxiety, worry and panic","Worry, phobias and panic respond to approaching the feared thing rather than avoiding it — in small, planned steps — and to postponing the worry rather than fighting it.","expose","Build a ladder"],
+ ["T.E.A.M.: Testing, Empathy, Agenda, Methods","A modern framework: test your mood regularly, lead with empathy, agree an agenda that includes the part of you that resists change, then choose methods that fit.","chat","Try it in chat"]
+];
+const MEDIT = [
+ {name:"Three-minute breathing space", when:"When you feel pulled in too many directions", steps:["Minute one — notice. Ask: what am I thinking, feeling and sensing right now? Name each without trying to fix it.","Minute two — gather. Narrow attention to the breath alone, following each in and out.","Minute three — widen. Let awareness spread to the whole body: sitting, breathing, here."]},
+ {name:"Body scan", when:"Before sleep, or when tension is physical", steps:["Lie down or sit. Close your eyes or soften your gaze.","Move attention slowly from your feet to the top of your head, a few breaths per area.","Just notice what's there — warmth, tightness, nothing at all. You're not trying to relax it.","When the mind wanders, note “thinking” and return to where you were.","Finish with three slow breaths."]},
+ {name:"Leaves on a stream", when:"When a thought keeps repeating", steps:["Picture a slow stream with leaves floating on it.","Place each thought on a leaf — “I'm failing” goes on a leaf — and watch it drift away.","Don't push thoughts off or chase them. If you get caught up, notice that too and place it on a leaf.","Aim for five minutes. The point is distance from the thought, not silence."]},
+ {name:"5-4-3-2-1 grounding", when:"Anxiety spikes or racing thoughts", steps:["Name five things you can see.","Four you can feel — feet on the floor, fabric, air on your skin.","Three you can hear.","Two you can smell.","One you can taste. Then breathe out slowly."]},
+ {name:"Mindful walking", when:"When sitting still makes things worse", steps:["Walk slower than usual for ten minutes.","Feel the heel land, the foot roll, the push-off.","When the mind drifts, say “thinking” and come back to your feet.","Keep your eyes soft on the horizon."]},
+ {name:"Self-compassion break", when:"After a mistake, or when you're being harsh with yourself", steps:["Say: “This is a moment of suffering.” Name what hurts.","Say: “Struggling is part of being human. I'm not the only one.”","Rest a hand on your chest and say: “May I be as kind to myself as I would be to a friend.”"]}
+];
+const BEHAV = [
+ ["Activity scheduling","Plan small, specific activities and predict the pleasure and sense of achievement before you do them.","activate"],
+ ["Graded exposure","Climb a ladder of feared situations, staying in each until the anxiety falls by about half.","expose"],
+ ["Behavioural experiments","Turn a thought into a prediction with a number, run the test, and let reality vote.","record"],
+ ["Worry postponement","Park the worry on a list and give it a fixed slot later in the day.","rumination"],
+ ["Anti-procrastination sheet","Break the task small, answer the excuses in writing, predict, do one piece, compare.","journal:procr"]
+];
+
+let learnTab = "basics";
+SCREENS.learn = (arg)=>{
+  if(arg && arg.tab) learnTab = arg.tab;
+  const c = el(`<div></div>`);
+  c.appendChild(el(`<h1>Learn</h1>`));
+  c.appendChild(el(`<p class="lede">The method in plain language. Read a little, then use it — understanding the theory doesn't change a mood, but one written thought record does.</p>`));
+  const body = el(`<div></div>`);
+  const TABS = [["basics","The big idea"],["ten","10 distortions"],["topics","Key topics"],["methods","Techniques"],["meditate","Meditation"],["journals","Journals"]];
+  const draw = ()=>{
+    const old = c.querySelector(".tabs"); if(old) old.remove();
+    c.insertBefore(tabBar(TABS, learnTab, id=>{ learnTab = id; draw(); }), body);
+    body.innerHTML = "";
+    cleanups.splice(0).forEach(f=>{ try{ f(); }catch(e){} });
+    body.appendChild(LEARN[learnTab]());
+  };
+  c.appendChild(body);
+  draw();
+  return c;
+};
+function goTo(spec){
+  const [name, tab] = String(spec).split(":");
+  go(name, tab ? {tab} : undefined);
+}
+
+const LEARN = {};
+LEARN.basics = ()=>{
+  const d = el(`<div></div>`);
+  const tri = el(`<div class="card"></div>`); tri.appendChild(triangleCard()); d.appendChild(tri);
+  d.appendChild(el(`<div class="card"><h2>The four moves</h2>
+    <p class="muted" style="margin-bottom:16px">Every thought record, however long, is these four steps.</p>
+    <div class="flow">${[
+      ["Catch it","Write the thought exactly as it sounds in your head — the harsh version."],
+      ["Name it","Find the distortion. Naming a pattern takes much of its authority away."],
+      ["Answer back","Build a version that is both true and kind, using one of the methods."],
+      ["Re-rate","Score your belief again. The number is your evidence that it worked."]
+    ].map((s,i)=>`<div class="flow-step"><div class="flow-n">${i+1}</div><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("")}</div></div>`));
+  d.appendChild(el(`<div class="card"><h2>Eight principles</h2>
+    <p class="muted" style="margin-bottom:16px">The ideas underneath every technique in this app.</p>
+    <div class="pgrid">${PRINCIPLES.map((p,i)=>`<div class="pr"><div class="n">${i+1}</div><div><h3>${esc(p[0])}</h3><p>${esc(p[1])}</p></div></div>`).join("")}</div></div>`));
+  const rp = el(`<div class="row"><button class="btn ghost sm">Replay the introduction</button></div>`);
+  rp.querySelector("button").onclick = showIntro;
+  d.appendChild(rp);
+  return d;
+};
+
+LEARN.ten = ()=>{
+  const d = el(`<div></div>`);
+  d.appendChild(el(`<div class="notice">Almost every painful thought is distorted in at least one of these ways. Most people lean on two or three habitually — your <b>Progress</b> screen shows which are yours.</div>`));
+  const grid = el(`<div class="tengrid"></div>`);
+  TEN.forEach((t,i)=>{
+    grid.appendChild(el(`<div class="tencard" style="--c:${COLS[i%4]}"><div class="bar"></div><div class="in">
+      <div class="tenhead"><div class="tenico"><svg viewBox="0 0 24 24" aria-hidden="true">${TEN_ICONS[t.n]}</svg></div>
+        <div><div class="tennum">DISTORTION ${t.n}</div><h3>${esc(t.name)}</h3></div></div>
+      <p class="tensay">${esc(t.sounds)}</p>
+      <p class="tenfix"><b>Answer back:</b> ${esc(t.fix)}</p></div></div>`));
+  });
+  d.appendChild(grid);
+  d.appendChild(spotGame());
+  return d;
+};
+function spotGame(){
+  let items = shuffle(SPOT.slice()), i = 0, score = 0;
+  const box = el(`<div class="card"><h2>Spot the distortion</h2>
+    <p class="muted" style="margin-bottom:14px">Ten thoughts, one distortion each. Quick practice is the fastest way to start catching them in real life.</p><div data-g></div></div>`);
+  const area = box.querySelector("[data-g]");
+  const draw = ()=>{
+    area.innerHTML = "";
+    if(i >= items.length){
+      area.appendChild(el(`<div><p class="serifbody" style="margin-bottom:4px">You got ${score} of ${items.length}.</p>
+        <p class="muted">${score>=8 ? "You're already spotting them quickly." : "Perfectly normal — several of these overlap. Re-read the ten above, then try again."}</p>
+        <button class="btn ghost sm">Play again</button></div>`));
+      area.querySelector("button").onclick = ()=>{ items = shuffle(SPOT.slice()); i = 0; score = 0; draw(); };
+      return;
+    }
+    const it = items[i];
+    const options = shuffle([it.a].concat(shuffle(TEN.map(t=>t.n).filter(n=>n!==it.a)).slice(0,3)));
+    area.appendChild(el(`<div class="qn">${i+1} OF ${items.length}</div>`));
+    area.appendChild(el(`<blockquote class="quote">${esc(it.t)}</blockquote>`));
+    const wrap = el(`<div class="opts"></div>`);
+    const fb = el(`<div style="margin-top:12px"></div>`);
+    options.forEach(n=>{
+      const b = el(`<button class="opt">${esc(TEN[n-1].name)}</button>`);
+      b.onclick = ()=>{
+        wrap.querySelectorAll("button").forEach(x=> x.disabled = true);
+        const ok = n === it.a;
+        if(ok) score++;
+        b.classList.add(ok ? "right" : "wrong");
+        if(!ok) wrap.querySelectorAll("button").forEach(x=>{ if(x.textContent===TEN[it.a-1].name) x.classList.add("right"); });
+        fb.appendChild(el(`<p style="margin:0 0 10px"><b>${ok?"Yes.":"Not quite."}</b> This is <b>${esc(TEN[it.a-1].name)}</b>. ${esc(TEN[it.a-1].fix)}</p>`));
+        const nx = el(`<button class="btn sm">${i+1<items.length?"Next":"See score"}</button>`);
+        nx.onclick = ()=>{ i++; draw(); };
+        fb.appendChild(nx);
+      };
+      wrap.appendChild(b);
+    });
+    area.appendChild(wrap); area.appendChild(fb);
+  };
+  draw();
+  return box;
+}
+
+LEARN.topics = ()=>{
+  const d = el(`<div></div>`);
+  d.appendChild(el(`<div class="notice">Key ideas in Dr. David Burns' cognitive approach, summarised in our own words. For the full programmes, read the originals — <i>Feeling Good</i>, <i>Feeling Great</i>, <i>When Panic Attacks</i> and <i>Feeling Good Together</i> — or listen to his Feeling Good Podcast.</div>`));
+  TOPICS.forEach((t,i)=>{
+    const row = el(`<div class="topic"><div class="n">${i+1}</div><div style="flex:1;min-width:0"><h3>${esc(t[0])}</h3><p>${esc(t[1])}</p><button class="btn ghost sm">${esc(t[3])} →</button></div></div>`);
+    row.querySelector("button").onclick = ()=> goTo(t[2]);
+    d.appendChild(row);
+  });
+  return d;
+};
+
+LEARN.methods = ()=>{
+  const d = el(`<div></div>`);
+  const m = el(`<div class="card"><h2>Ten ways to answer a thought</h2>
+    <p class="muted" style="margin-bottom:16px">One method rarely does it. Stack two or three on the same thought and watch which one actually moves the number.</p></div>`);
+  METHODS.forEach(x=> m.appendChild(el(`<details class="method"><summary>${esc(x.name)}</summary><p>${esc(x.how)}</p></details>`)));
+  d.appendChild(m);
+  const b = el(`<div class="card"><h2>Behavioural techniques</h2>
+    <p class="muted" style="margin-bottom:16px">Thinking differently is half the work. Doing something differently is the other half.</p></div>`);
+  BEHAV.forEach(x=>{
+    const r = el(`<div class="list-item"><div class="spread"><div><b style="font-weight:600">${esc(x[0])}</b><div class="muted">${esc(x[1])}</div></div><button class="btn ghost sm">Open</button></div></div>`);
+    r.querySelector("button").onclick = ()=> goTo(x[2]);
+    b.appendChild(r);
+  });
+  d.appendChild(b);
+  const cb = el(`<div class="card"><h2>Core beliefs</h2>
+    <p class="muted" style="margin-bottom:16px">The rules underneath the thoughts. You don't argue with these directly — you gather evidence against them, one thought record at a time.</p></div>`);
+  CORE_BELIEFS.forEach(x=> cb.appendChild(el(`<details class="method"><summary>${esc(x.name)}</summary><p>${esc(x.def)}</p></details>`)));
+  d.appendChild(cb);
+  d.appendChild(el(`<div class="card flat"><h2>What this is and isn't</h2>
+    <p>These are established cognitive and behavioural techniques. They work best when repeated, not read once.</p>
+    <p style="margin:0">This is not therapy and it is not a therapist. It can't see you, can't tell when things are getting worse, and can't hold anything. If your mood has been low for weeks, if you aren't sleeping, or if you've had thoughts of hurting yourself, the right next step is a person — a doctor, a psychologist, a helpline.</p></div>`));
+  return d;
+};
+
+function breathingCard(){
+  const P = {
+    calm:{name:"Calming 4-4-6", ph:[["Breathe in",4,1],["Hold",4,1],["Breathe out",6,.55]]},
+    box:{name:"Box 4-4-4-4",  ph:[["Breathe in",4,1],["Hold",4,1],["Breathe out",4,.55],["Hold",4,.55]]}
+  };
+  const w = el(`<div class="card"><h2>Guided breathing</h2>
+    <p class="muted" style="margin-bottom:10px">Follow the circle. A longer breath out than in is what settles the body. Two or three minutes is plenty.</p>
+    <div class="row" data-pat></div>
+    <div class="breath"><div class="orbwrap"><div class="orb" aria-hidden="true"></div></div><div class="blabel" aria-live="polite">Ready</div></div>
+    <div class="row" style="justify-content:center"><button class="btn" data-go>Start</button><span class="muted" data-cnt></span></div></div>`);
+  let key = "calm", timer = null, cycles = 0, running = false;
+  const orb = w.querySelector(".orb"), lab = w.querySelector(".blabel"), cnt = w.querySelector("[data-cnt]"), btn = w.querySelector("[data-go]");
+  const stop = ()=>{
+    running = false; clearTimeout(timer); timer = null;
+    lab.textContent = "Ready"; orb.style.transitionDuration = ".6s"; orb.style.transform = "scale(.55)"; btn.textContent = "Start";
+  };
+  const run = idx=>{
+    if(!running) return;
+    const ph = P[key].ph, cur = ph[idx % ph.length];
+    if(idx > 0 && idx % ph.length === 0){ cycles++; cnt.textContent = cycles + (cycles===1?" cycle":" cycles"); }
+    lab.textContent = cur[0];
+    orb.style.transitionDuration = cur[1] + "s";
+    orb.style.transform = "scale(" + cur[2] + ")";
+    timer = setTimeout(()=> run(idx+1), cur[1]*1000);
+  };
+  const pat = w.querySelector("[data-pat]");
+  Object.keys(P).forEach(k=>{
+    const b = el(`<button class="chip" aria-pressed="${k===key}">${esc(P[k].name)}</button>`);
+    b.onclick = ()=>{ key = k; pat.querySelectorAll("button").forEach(x=> x.setAttribute("aria-pressed", String(x===b))); if(running){ stop(); } };
+    pat.appendChild(b);
+  });
+  btn.onclick = ()=>{
+    if(running){ stop(); return; }
+    running = true; cycles = 0; cnt.textContent = ""; btn.textContent = "Stop";
+    orb.style.transitionDuration = "0s"; orb.style.transform = "scale(.55)";
+    timer = setTimeout(()=> run(0), 60);
+  };
+  cleanups.push(stop);
+  return w;
+}
+LEARN.meditate = ()=>{
+  const d = el(`<div></div>`);
+  d.appendChild(breathingCard());
+  const m = el(`<div class="card"><h2>Mindfulness practices</h2>
+    <p class="muted" style="margin-bottom:16px">Mindfulness isn't about emptying your mind. It's about noticing thoughts as thoughts — which is the skill that makes every other technique easier.</p></div>`);
+  MEDIT.forEach(x=> m.appendChild(el(`<details class="method"><summary>${esc(x.name)}</summary>
+    <p class="muted" style="margin:8px 0 0">Good for: ${esc(x.when)}</p>
+    <ol class="serifbody" style="margin:10px 0 0;padding-left:22px">${x.steps.map(s=>`<li style="margin-bottom:6px">${esc(s)}</li>`).join("")}</ol></details>`)));
+  d.appendChild(m);
+  return d;
+};
+
+LEARN.journals = ()=>{
+  const d = el(`<div></div>`);
+  d.appendChild(el(`<div class="notice">A thought on paper sits still long enough to be examined. Pick the journal that fits what you're dealing with.</div>`));
+  [
+    ["The Daily Mood Log","For a specific upsetting moment. Event, emotions, automatic thoughts, distortions, truer replies, and a re-rating of everything.","journal:mood","Open"],
+    ["The anti-procrastination sheet","For a task you keep avoiding. Excuses answered in writing, small steps, and predictions tested against reality.","journal:procr","Open"],
+    ["Three good things","Write three things that went okay today and why. Small and boring is fine — it retrains attention away from the mental filter.","journal:free","Open"],
+    ["Worry → plan","Name the worry, rate how likely it is, work out how you'd cope, and find one action. Turns rumination into a to-do.","journal:free","Open"],
+    ["A letter to yourself","Write to yourself as you would to a friend in the same situation. The double standard, made visible.","journal:free","Open"]
+  ].forEach(x=>{
+    const r = el(`<div class="topic"><div class="n">✎</div><div style="flex:1;min-width:0"><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p><button class="btn ghost sm">${x[3]} →</button></div></div>`);
+    r.querySelector("button").onclick = ()=> goTo(x[2]);
+    d.appendChild(r);
+  });
+  return d;
+};
+
+/* ═══ SCREEN: Journal ═══════════════════════════════════ */
+const EMO_LOG = EMOTIONS.concat([{id:"stress", name:"Overwhelmed, stressed"}]);
+const newThought = ()=>({text:"", before:80, dist:[], pos:"", posBelief:50, after:80});
+const dname = id => (DISTORTIONS.find(q=>q.id===id) || {}).name || id;
+let journalTab = "mood";
+
+SCREENS.journal = (arg)=>{
+  if(arg && arg.tab) journalTab = arg.tab;
+  const c = el(`<div></div>`);
+  c.appendChild(el(`<h1>Journal</h1>`));
+  c.appendChild(el(`<p class="lede">Write the thought down and work on it on paper. Nothing shifts a belief as reliably as seeing it written next to its answer.</p>`));
+  const body = el(`<div></div>`);
+  const TABS = [["mood","Mood log"],["history","History"],["procr","Procrastination"],["free","Free journal"]];
+  const draw = ()=>{
+    const old = c.querySelector(".tabs"); if(old) old.remove();
+    c.insertBefore(tabBar(TABS, journalTab, id=>{ journalTab = id; draw(); }), body);
+    body.innerHTML = "";
+    const views = {
+      mood: ()=> moodLogForm(id=> go("journal", {tab:"history", open:id})),
+      history: ()=> moodHistory(arg && arg.open),
+      procr: procrView,
+      free: freeJournal
+    };
+    body.appendChild(views[journalTab]());
+  };
+  c.appendChild(body);
+  draw();
+  return c;
+};
+
+function thoughtRow(t, n, onRemove){
+  const row = el(`<div class="list-item" style="padding:16px">
+    <div class="spread" style="margin-bottom:10px"><h3 style="margin:0">Thought ${n}</h3>${n>1?`<button class="btn quiet sm" data-rm>Remove</button>`:""}</div>
+    <label class="fl">Automatic thought — as it sounds in your head</label>
+    <textarea rows="2" data-f="text" placeholder="I'm going to be exposed as a fraud."></textarea>
+    <div data-s="before" style="margin-top:12px"></div>
+    <label class="fl">Distortions in it</label>
+    <div class="row" data-chips></div>
+    <div class="row" style="margin:12px 0 4px"><button class="btn ghost sm" data-ai>Suggest distortions + a reframe</button></div>
+    <div data-aiout></div>
+    <label class="fl" style="margin-top:12px">Positive thought — a truer, kinder answer</label>
+    <textarea rows="3" data-f="pos" placeholder="Write something you would defend with evidence."></textarea>
+    <div data-s="pos" style="margin-top:12px"></div>
+  </div>`);
+  const text = row.querySelector('[data-f="text"]'), pos = row.querySelector('[data-f="pos"]');
+  text.value = t.text; pos.value = t.pos;
+  text.oninput = ()=> t.text = text.value;
+  pos.oninput = ()=> t.pos = pos.value;
+  row.querySelector('[data-s="before"]').appendChild(slider("How much do you believe it? (0–100)", t.before, v=> t.before = v));
+  row.querySelector('[data-s="pos"]').appendChild(slider("How much do you believe the positive thought?", t.posBelief, v=> t.posBelief = v));
+  const chips = row.querySelector("[data-chips]");
+  const paint = ()=> chips.querySelectorAll("button").forEach(b=> b.setAttribute("aria-pressed", String(t.dist.includes(b.dataset.id))));
+  DISTORTIONS.forEach(d=>{
+    const b = el(`<button class="chip" data-id="${d.id}" aria-pressed="false" title="${esc(d.def)}">${esc(d.name)}</button>`);
+    b.onclick = ()=>{ t.dist = t.dist.includes(d.id) ? t.dist.filter(x=>x!==d.id) : t.dist.concat(d.id); paint(); };
+    chips.appendChild(b);
+  });
+  paint();
+  const rm = row.querySelector("[data-rm]"); if(rm) rm.onclick = onRemove;
+  const aiBtn = row.querySelector("[data-ai]"), aiOut = row.querySelector("[data-aiout]");
+  aiBtn.onclick = async ()=>{
+    if(!t.text.trim()){ text.focus(); return; }
+    aiOut.innerHTML = "";
+    if(!AI){ aiOut.appendChild(el(`<div class="notice">${esc(aiMsg("not_granted"))}</div>`)); return; }
+    aiBtn.disabled = true; aiOut.appendChild(thinkingEl("Reading it…"));
+    try{
+      const r = await AI.json(
+`Inside a CBT journal. The user's automatic thought: "${t.text}"
+Distortion ids: ${DISTORTIONS.map(d=>d.id+" = "+d.name).join("; ")}
+Reply with ONLY a JSON object: {"distortions":["<id>"],"reframe":"<a truer, kind, first-person version that keeps their facts and acknowledges what actually hurts>","why":"<one plain sentence naming the main distortion and where it shows>"}
+Use between one and three distortion ids, exactly as listed.`);
+      aiOut.innerHTML = "";
+      const ids = (r.distortions||[]).filter(id=> DISTORTIONS.some(d=>d.id===id));
+      if(ids.length){ t.dist = ids; paint(); }
+      if(r.why) aiOut.appendChild(el(`<p class="muted" style="margin:0 0 8px">${esc(r.why)}</p>`));
+      if(r.reframe){
+        if(!pos.value.trim()){ pos.value = r.reframe; t.pos = r.reframe; }
+        else aiOut.appendChild(el(`<p class="serifbody" style="margin:0 0 8px;color:var(--ink-2)">Suggested: ${esc(r.reframe)}</p>`));
+      }
+    }catch(err){ aiOut.innerHTML = ""; aiOut.appendChild(aiErrorCard(err)); }
+    aiBtn.disabled = false;
+  };
+  return row;
+}
+
+function moodLogForm(onSaved){
+  const d = {event:"", emo:{}, thoughts:[newThought()]};
+  EMO_LOG.forEach(e=> d.emo[e.id] = {before:0, after:0});
+  const c = el(`<div></div>`);
+
+  const c1 = el(`<div class="card"><h2>1 · The upsetting event</h2>
+    <p class="muted" style="margin-bottom:10px">Who, what, when, where — just the facts a camera would have caught.</p>
+    <textarea rows="2" placeholder="Tuesday's team meeting: my manager moved on without reading my update."></textarea></div>`);
+  c1.querySelector("textarea").oninput = e=> d.event = e.target.value;
+  c.appendChild(c1);
+
+  const c2 = el(`<div class="card"><h2>2 · How do you feel?</h2>
+    <p class="muted" style="margin-bottom:14px">Rate only the feelings that are present, 0 to 100. You'll rate them again at the end.</p><div data-e></div></div>`);
+  EMO_LOG.forEach(e=> c2.querySelector("[data-e]").appendChild(slider(e.name, 0, v=> d.emo[e.id].before = v)));
+  c.appendChild(c2);
+
+  const c3 = el(`<div class="card"><h2>3 · The thoughts behind the feelings</h2>
+    <p class="muted" style="margin-bottom:14px">Each thought gets its own block: the thought, its distortions, then a truer reply. Start with the one that hurts most.</p>
+    <div data-t></div><button class="btn ghost sm" data-add style="margin-top:6px">+ Add another thought</button></div>`);
+  const tl = c3.querySelector("[data-t]");
+  const drawRows = ()=>{
+    tl.innerHTML = "";
+    d.thoughts.forEach((t,i)=> tl.appendChild(thoughtRow(t, i+1, ()=>{ d.thoughts.splice(i,1); drawRows(); })));
+    c3.querySelector("[data-add]").hidden = d.thoughts.length >= 4;
+  };
+  c3.querySelector("[data-add]").onclick = ()=>{ d.thoughts.push(newThought()); drawRows(); };
+  drawRows();
+  c.appendChild(c3);
+
+  const fin = el(`<div class="card"><h2>4 · Re-rate</h2><div data-after>
+    <p class="muted" style="margin-bottom:12px">When you've written your positive thoughts, re-rate how you feel and how much you still believe each original thought.</p>
+    <button class="btn" data-fin>Re-rate and finish</button></div></div>`);
+  fin.querySelector("[data-fin]").onclick = ()=>{
+    const ts = d.thoughts.filter(t=> t.text.trim());
+    if(!ts.length){ const first = tl.querySelector('[data-f="text"]'); if(first){ first.scrollIntoView({behavior:"smooth",block:"center"}); first.focus(); } return; }
+    const box = fin.querySelector("[data-after]"); box.innerHTML = "";
+    const felt = EMO_LOG.filter(e=> d.emo[e.id].before > 0);
+    box.appendChild(el(`<label class="fl">How do you feel now?</label>`));
+    if(!felt.length) box.appendChild(el(`<p class="muted">You didn't rate any feelings at the start, so there's nothing to compare — you can still save the thoughts.</p>`));
+    felt.forEach(e=>{ d.emo[e.id].after = d.emo[e.id].before; box.appendChild(slider(e.name+" (was "+d.emo[e.id].before+")", d.emo[e.id].before, v=> d.emo[e.id].after = v)); });
+    box.appendChild(el(`<hr class="sep">`));
+    box.appendChild(el(`<label class="fl">How much do you believe each original thought now?</label>`));
+    ts.forEach(t=>{ t.after = t.before; box.appendChild(slider("“"+t.text.slice(0,60)+(t.text.length>60?"…":"")+"” (was "+t.before+")", t.before, v=> t.after = v)); });
+    const sv = el(`<button class="btn" style="margin-top:8px">Save to my journal</button>`);
+    sv.onclick = ()=>{
+      const id = uid(), stamp = Date.now();
+      const entry = {id, ts:stamp, date:today(), event:d.event.trim(),
+        emotions: felt.map(e=>({id:e.id, name:e.name, before:d.emo[e.id].before, after:d.emo[e.id].after})),
+        thoughts: ts.map(t=>({text:t.text.trim(), before:t.before, after:t.after, dist:t.dist.slice(), pos:t.pos.trim(), posBelief:t.posBelief}))};
+      S.logs.unshift(entry);
+      entry.thoughts.forEach(t=> S.records.unshift({id:uid(), ts:stamp, date:today(), thought:t.text, before:t.before, after:t.after,
+        distortions:t.dist.map(x=>({id:x, name:dname(x)})), reframe:t.pos, core:null}));
+      save();
+      onSaved(id);
+    };
+    box.appendChild(sv);
+    sv.scrollIntoView({behavior:"smooth", block:"center"});
+  };
+  c.appendChild(fin);
+  return c;
+}
+
+function moodHistory(openId){
+  const c = el(`<div></div>`);
+  if(!S.logs.length){
+    c.appendChild(el(`<div class="card flat"><div class="empty"><p>No mood logs yet. Complete one and it will be kept here, so you can look back at how a bad moment shifted.</p><button class="btn">Start a mood log</button></div></div>`));
+    c.querySelector("button").onclick = ()=> go("journal", {tab:"mood"});
+    return c;
+  }
+  S.logs.forEach(L=>{
+    const drops = L.emotions.map(e=> e.before - e.after);
+    const avg = drops.length ? Math.round(drops.reduce((a,b)=>a+b,0)/drops.length) : null;
+    const title = (L.event || (L.thoughts[0] && L.thoughts[0].text) || "Mood log").slice(0,70);
+    const det = el(`<details class="method" ${L.id===openId?"open":""}><summary>${esc(fmt(L.ts))} — ${esc(title)}${avg!=null?` <span class="tag ${avg>0?"calm":""}" style="margin-left:6px">${avg>0?"feeling −"+avg:avg<0?"feeling +"+(-avg):"no change"}</span>`:""}</summary><div style="margin-top:12px"></div></details>`);
+    const body = det.querySelector("div");
+    if(L.event) body.appendChild(el(`<p class="muted" style="margin:0 0 10px">${esc(L.event)}</p>`));
+    L.emotions.forEach(e=> body.appendChild(el(`<div class="spread" style="font-size:14px;margin-bottom:4px"><span>${esc(e.name)}</span><span class="muted">${e.before} → ${e.after}</span></div>`)));
+    L.thoughts.forEach(t=> body.appendChild(el(`<div class="list-item" style="margin-top:10px">
+      <blockquote class="quote" style="font-size:16px;margin-bottom:8px">${esc(t.text)}</blockquote>
+      <div class="row" style="margin-bottom:8px">${t.dist.map(x=>`<span class="tag">${esc(dname(x))}</span>`).join("")}<span class="muted">belief ${t.before} → ${t.after}</span></div>
+      ${t.pos ? `<p class="serifbody" style="margin:0;color:var(--ink-2)">${esc(t.pos)}</p>` : ""}</div>`)));
+    const del = el(`<button class="btn quiet sm" style="margin-top:10px;color:var(--hot)">Delete this entry</button>`);
+    del.onclick = ()=>{ if(!confirm("Delete this mood log?")) return; S.logs = S.logs.filter(x=>x.id!==L.id); save(); go("journal",{tab:"history"}); };
+    body.appendChild(del);
+    c.appendChild(det);
+  });
+  return c;
+}
+
+function procrView(){
+  const c = el(`<div></div>`);
+  c.appendChild(el(`<div class="card"><h2>The anti-procrastination sheet</h2>
+    <p style="margin:0">Procrastination is mostly a forecasting error. You predict the task will be miserable and the payoff small, so you wait for a better mood. The sheet fixes the forecast: break the task small, answer the excuses in writing, predict, do one piece, then compare prediction with reality.</p></div>`));
+
+  const d = {task:"", tics:[{tic:"", toc:""}], steps:[{text:"",pd:50,ps:30},{text:"",pd:50,ps:30},{text:"",pd:50,ps:30}]};
+  const form = el(`<div class="card"><h2>New sheet</h2>
+    <label class="fl">The task I'm avoiding</label>
+    <textarea rows="2" data-task placeholder="File my tax return"></textarea>
+    <hr class="sep"><h3>My excuses — and honest answers</h3>
+    <p class="muted" style="margin-bottom:12px">Write what your mind says to get you off the hook, then a reply that's true and points back toward the task.</p>
+    <div data-tics></div><button class="btn ghost sm" data-addtic>+ Another excuse</button>
+    <hr class="sep"><h3>Small steps</h3>
+    <p class="muted" style="margin-bottom:12px">Make each step small enough to start in the next five minutes. Predict how hard it will be and how satisfying, 0 to 100.</p>
+    <div data-steps></div><button class="btn ghost sm" data-addstep>+ Another step</button>
+    <div style="margin-top:18px"><button class="btn" data-save>Save this sheet</button></div></div>`);
+  const taskEl = form.querySelector("[data-task]");
+  taskEl.oninput = ()=> d.task = taskEl.value;
+
+  const ticBox = form.querySelector("[data-tics]");
+  const drawTics = ()=>{
+    ticBox.innerHTML = "";
+    d.tics.forEach((x,i)=>{
+      const r = el(`<div class="list-item"><label class="fl">Excuse ${i+1}</label>
+        <textarea rows="2" data-a placeholder="I don't feel like it right now."></textarea>
+        <label class="fl" style="margin-top:10px">Honest answer</label>
+        <textarea rows="2" data-b placeholder="Feeling like it usually comes after I start, not before."></textarea>
+        <div class="row" style="margin-top:10px"><button class="btn ghost sm" data-ai>Answer it back</button>${d.tics.length>1?`<button class="btn quiet sm" data-rm>Remove</button>`:""}</div>
+        <div data-out style="margin-top:8px"></div></div>`);
+      const a = r.querySelector("[data-a]"), b = r.querySelector("[data-b]"), out = r.querySelector("[data-out]");
+      a.value = x.tic; b.value = x.toc;
+      a.oninput = ()=> x.tic = a.value; b.oninput = ()=> x.toc = b.value;
+      const rm = r.querySelector("[data-rm]"); if(rm) rm.onclick = ()=>{ d.tics.splice(i,1); drawTics(); };
+      r.querySelector("[data-ai]").onclick = async ev=>{
+        const btn = ev.currentTarget;
+        if(!x.tic.trim()){ a.focus(); return; }
+        out.innerHTML = "";
+        if(!AI){ out.appendChild(el(`<div class="notice">${esc(aiMsg("not_granted"))}</div>`)); return; }
+        btn.disabled = true; out.appendChild(thinkingEl("Thinking…"));
+        try{
+          const j = await AI.json(`A user is procrastinating on: "${d.task || "a task"}". Their excuse: "${x.tic}". Reply with ONLY JSON {"reply":"<one or two sentences, first person, honest and specific, pointing back toward starting the task — no cheerleading, no guilt>"}`);
+          out.innerHTML = "";
+          if(j.reply){ b.value = j.reply; x.toc = j.reply; }
+        }catch(err){ out.innerHTML = ""; out.appendChild(aiErrorCard(err)); }
+        btn.disabled = false;
+      };
+      ticBox.appendChild(r);
+    });
+  };
+  form.querySelector("[data-addtic]").onclick = ()=>{ d.tics.push({tic:"",toc:""}); drawTics(); };
+  drawTics();
+
+  const stepBox = form.querySelector("[data-steps]");
+  const drawSteps = ()=>{
+    stepBox.innerHTML = "";
+    d.steps.forEach((s,i)=>{
+      const r = el(`<div class="list-item"><div class="spread" style="gap:8px"><input type="text" data-t placeholder="Step ${i+1} — e.g. find last year's forms" style="flex:1">${d.steps.length>1?`<button class="btn quiet sm" data-rm>✕</button>`:""}</div>
+        <div class="grid2" style="margin-top:10px"><div data-pd></div><div data-ps></div></div></div>`);
+      const t = r.querySelector("[data-t]"); t.value = s.text; t.oninput = ()=> s.text = t.value;
+      r.querySelector("[data-pd]").appendChild(slider("Predicted difficulty", s.pd, v=> s.pd = v));
+      r.querySelector("[data-ps]").appendChild(slider("Predicted satisfaction", s.ps, v=> s.ps = v));
+      const rm = r.querySelector("[data-rm]"); if(rm) rm.onclick = ()=>{ d.steps.splice(i,1); drawSteps(); };
+      stepBox.appendChild(r);
+    });
+  };
+  form.querySelector("[data-addstep]").onclick = ()=>{ d.steps.push({text:"",pd:50,ps:30}); drawSteps(); };
+  drawSteps();
+
+  form.querySelector("[data-save]").onclick = ()=>{
+    const steps = d.steps.filter(s=> s.text.trim());
+    if(!d.task.trim()){ taskEl.focus(); return; }
+    if(!steps.length){ const f = stepBox.querySelector("[data-t]"); f && f.focus(); return; }
+    S.procr.unshift({id:uid(), ts:Date.now(), task:d.task.trim(),
+      tics:d.tics.filter(x=>x.tic.trim()).map(x=>({tic:x.tic.trim(), toc:x.toc.trim()})),
+      steps:steps.map(s=>({id:uid(), text:s.text.trim(), pd:s.pd, ps:s.ps, done:false}))});
+    save(); go("journal", {tab:"procr"});
+  };
+  c.appendChild(form);
+
+  S.procr.forEach(P=>{
+    const done = P.steps.filter(s=>s.done);
+    const card = el(`<div class="card"><div class="card-hd"><div><h2>${esc(P.task)}</h2>
+      <p class="muted" style="margin:0">${done.length} of ${P.steps.length} steps done · started ${esc(fmt(P.ts))}</p></div>
+      <button class="btn quiet sm" data-del title="Delete sheet">✕</button></div><div data-body></div></div>`);
+    const body = card.querySelector("[data-body]");
+    if(P.tics.length){
+      const dt = el(`<details class="method"><summary>My excuses and answers</summary><div style="margin-top:10px"></div></details>`);
+      P.tics.forEach(x=> dt.querySelector("div").appendChild(el(`<p style="margin:0 0 10px;font-size:14.5px"><b>${esc(x.tic)}</b><br><span class="muted">${esc(x.toc || "—")}</span></p>`)));
+      body.appendChild(dt);
+    }
+    P.steps.forEach(s=>{
+      const row = el(`<div class="list-item"><div class="spread"><div style="min-width:0"><b style="font-weight:600">${esc(s.text)}</b>
+        <div class="muted">${s.done ? `predicted ${s.pd}/${s.ps} → actual ${s.ad}/${s.as} (difficulty / satisfaction)` : `predicted difficulty ${s.pd}, satisfaction ${s.ps}`}</div></div>
+        ${s.done ? `<span class="tag calm">done</span>` : `<button class="btn sm ghost">I did it</button>`}</div><div data-rate hidden style="margin-top:12px"></div></div>`);
+      const b = row.querySelector("button");
+      if(b) b.onclick = ()=>{
+        const rate = row.querySelector("[data-rate]"); if(!rate.hidden) return;
+        rate.hidden = false;
+        let ad = s.pd, as_ = s.ps;
+        rate.appendChild(el(`<label class="fl">How was it, actually?</label>`));
+        rate.appendChild(slider("Actual difficulty", s.pd, v=> ad = v));
+        rate.appendChild(slider("Actual satisfaction", s.ps, v=> as_ = v));
+        const sv = el(`<button class="btn sm">Save</button>`);
+        sv.onclick = ()=>{ s.done = true; s.ad = ad; s.as = as_; save(); go("journal",{tab:"procr"}); };
+        rate.appendChild(sv);
+      };
+      body.appendChild(row);
+    });
+    if(done.length){
+      const dd = Math.round(done.reduce((a,s)=>a+(s.pd-s.ad),0)/done.length);
+      const ds = Math.round(done.reduce((a,s)=>a+(s.as-s.ps),0)/done.length);
+      body.appendChild(el(`<p class="muted" style="margin:6px 0 0">So far: steps came out <b>${Math.abs(dd)} points ${dd>=0?"easier":"harder"}</b> and <b>${Math.abs(ds)} points ${ds>=0?"more":"less"} satisfying</b> than predicted.${dd>0||ds>0?" That gap is the finding — the forecast was too gloomy.":""}</p>`));
+    }
+    card.querySelector("[data-del]").onclick = ()=>{ if(!confirm("Delete this sheet?")) return; S.procr = S.procr.filter(x=>x.id!==P.id); save(); go("journal",{tab:"procr"}); };
+    c.appendChild(card);
+  });
+  return c;
+}
+
+const PROMPTS = [
+ ["Three good things","Three things that went okay today, however small — and why each one happened."],
+ ["Worry → plan","What exactly am I worried about? How likely is it, honestly (0–100)? If it happened, how would I cope? Is there one thing I can do now?"],
+ ["Letter to myself","Write to yourself the way you would to a friend in exactly this situation."],
+ ["What I handled well","One thing I handled well today, and what it says about my strengths."],
+ ["Unsent letter","Write what you'd say if you could say it without consequences. You will not send it."]
+];
+function freeJournal(){
+  const c = el(`<div></div>`);
+  let prompt = "", mood = 50;
+  const form = el(`<div class="card"><h2>Free journal</h2>
+    <p class="muted" style="margin-bottom:12px">Pick a prompt, or just write.</p>
+    <div class="row" data-p style="margin-bottom:12px"></div>
+    <p class="serifbody" data-pt style="color:var(--ink-2);margin:0 0 10px" hidden></p>
+    <textarea rows="6" placeholder="Start anywhere."></textarea>
+    <div style="margin-top:12px" data-m></div>
+    <div class="sl-lab"><span>worst</span><span>best</span></div>
+    <button class="btn">Save entry</button></div>`);
+  const ta = form.querySelector("textarea"), pt = form.querySelector("[data-pt]");
+  PROMPTS.forEach(p=>{
+    const b = el(`<button class="chip" aria-pressed="false">${esc(p[0])}</button>`);
+    b.onclick = ()=>{ const on = b.getAttribute("aria-pressed")==="true";
+      form.querySelectorAll("[data-p] .chip").forEach(x=> x.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed", String(!on)); prompt = on ? "" : p[0]; pt.hidden = on; pt.textContent = on ? "" : p[1]; };
+    form.querySelector("[data-p]").appendChild(b);
+  });
+  form.querySelector("[data-m]").appendChild(slider("How do you feel right now?", 50, v=> mood = v));
+  form.querySelector(".btn").onclick = ()=>{
+    const t = ta.value.trim(); if(!t){ ta.focus(); return; }
+    S.journal.unshift({id:uid(), ts:Date.now(), prompt, text:t, mood}); save(); go("journal",{tab:"free"});
+  };
+  c.appendChild(form);
+  S.journal.forEach(J=>{
+    const r = el(`<div class="list-item"><div class="spread" style="margin-bottom:6px"><span class="muted">${esc(fmt(J.ts))}${J.prompt?" · "+esc(J.prompt):""} · mood ${J.mood}</span><button class="btn quiet sm" title="Delete">✕</button></div>
+      <p class="serifbody" style="margin:0;white-space:pre-wrap">${esc(J.text)}</p></div>`);
+    r.querySelector("button").onclick = ()=>{ if(!confirm("Delete this entry?")) return; S.journal = S.journal.filter(x=>x.id!==J.id); save(); go("journal",{tab:"free"}); };
+    c.appendChild(r);
+  });
+  if(!S.journal.length) c.appendChild(el(`<p class="muted">Your entries will appear here, newest first.</p>`));
+  return c;
+}
+
+/* ═══ SCREEN: Check-in (PHQ-9 and GAD-7) ════════════════ */
+const FREQ = [["Not at all",0],["Several days",1],["More than half the days",2],["Nearly every day",3]];
+const TESTS = {
+ phq9:{ name:"Depression", full:"PHQ-9", max:27,
+  items:["Little interest or pleasure in doing things","Feeling down, depressed, or hopeless","Trouble falling or staying asleep, or sleeping too much","Feeling tired or having little energy","Poor appetite or overeating","Feeling bad about yourself — or that you are a failure or have let yourself or your family down","Trouble concentrating on things, such as reading or watching television","Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual","Thoughts that you would be better off dead, or of hurting yourself in some way"],
+  bands:[
+   {to:4,  label:"Minimal", tone:"calm", text:"Few or no depressive symptoms over the past two weeks. If you're here for a specific painful thought rather than a low mood, the Reframe and Journal tools still work well. Re-check any time things change."},
+   {to:9,  label:"Mild", tone:"calm", text:"Some symptoms are present but they aren't taking over. This is the range where self-guided CBT — thought records and scheduling small activities — often helps most. Re-take this in two weeks to see which way it's heading."},
+   {to:14, label:"Moderate", tone:"", text:"Symptoms are probably affecting your work, relationships or energy. Self-help can still move things, but this is a sensible point to talk to a doctor or counsellor, especially if it has lasted more than two weeks. Use this app alongside that, not instead of it."},
+   {to:19, label:"Moderately severe", tone:"hot", text:"Symptoms are substantial and likely hard to carry day to day. Please arrange to see a doctor or mental-health professional soon. Treatment at this level works well — and you don't have to wait until you feel ready."},
+   {to:27, label:"Severe", tone:"hot", text:"Symptoms are heavy. Please contact a doctor or mental-health professional promptly — within days rather than weeks. If getting there feels impossible, ask someone you trust to help you make the call."}
+  ],
+  next:[["Reframe a thought","record"],["Schedule something","activate"]] },
+ gad7:{ name:"Anxiety", full:"GAD-7", max:21,
+  items:["Feeling nervous, anxious, or on edge","Not being able to stop or control worrying","Worrying too much about different things","Trouble relaxing","Being so restless that it is hard to sit still","Becoming easily annoyed or irritable","Feeling afraid, as if something awful might happen"],
+  bands:[
+   {to:4,  label:"Minimal", tone:"calm", text:"Little anxiety over the past two weeks. Breathing and grounding practices are still worth learning now, while you're calm, so they're ready when you need them."},
+   {to:9,  label:"Mild", tone:"calm", text:"Some anxiety — noticeable, usually manageable. Exposure ladders, worry postponement and breathing practice are good fits. Re-check in two weeks."},
+   {to:14, label:"Moderate", tone:"", text:"A level at which anxiety commonly starts to interfere with daily life. It's worth discussing with a doctor or counsellor; self-help works best alongside that. The exposure ladder is a good place to start."},
+   {to:21, label:"Severe", tone:"hot", text:"Anxiety is likely taking up a large part of your life. Please speak with a doctor or mental-health professional soon — effective treatments exist, including CBT with exposure."}
+  ],
+  next:[["Build an exposure ladder","expose"],["Break a worry loop","rumination"]] }
+};
+const bandFor = (T, s)=> T.bands.find(b=> s <= b.to) || T.bands[T.bands.length-1];
+
+function trendChart(list, max){
+  const W=560, H=150, P={t:10,r:12,b:22,l:28};
+  const n = list.length, span = Math.max(1, n-1);
+  const x = i => P.l + (n===1 ? (W-P.l-P.r)/2 : i/span*(W-P.l-P.r));
+  const y = v => P.t + (1 - v/max) * (H-P.t-P.b);
+  const path = list.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.score).toFixed(1)}`).join(" ");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Score history">
+    ${[0,.25,.5,.75,1].map(f=>{ const v = Math.round(max*f); return `<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${P.l-6}" y="${y(v)+4}" font-size="10" fill="var(--ink-3)" text-anchor="end">${v}</text>`; }).join("")}
+    <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+    ${list.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.score)}" r="3.6" fill="var(--accent)"/>`).join("")}
+  </svg>`;
+}
+
+let checkTab = "phq9";
+SCREENS.checkin = (arg)=>{
+  if(arg && arg.tab) checkTab = arg.tab;
+  const c = el(`<div></div>`);
+  c.appendChild(el(`<h1>Check-in</h1>`));
+  c.appendChild(el(`<p class="lede">A short self-assessment for low mood or anxiety, scored in the standard way, with a plain-language explanation of what the number means. Repeat it every couple of weeks to see whether what you're doing is working.</p>`));
+  const body = el(`<div></div>`);
+  const draw = ()=>{
+    const old = c.querySelector(".tabs"); if(old) old.remove();
+    c.insertBefore(tabBar([["phq9","Depression (PHQ-9)"],["gad7","Anxiety (GAD-7)"]], checkTab, id=>{ checkTab = id; draw(); }), body);
+    body.innerHTML = "";
+    body.appendChild(checkForm(checkTab));
+  };
+  c.appendChild(body);
+  draw();
+  return c;
+};
+
+function checkForm(key){
+  const T = TESTS[key];
+  const c = el(`<div></div>`);
+  const ans = new Array(T.items.length).fill(null);
+  const form = el(`<div></div>`);
+  const hist = S.assess.filter(a=>a.type===key).slice().sort((a,b)=>a.ts-b.ts);
+  if(hist.length){
+    const last = hist[hist.length-1], b = bandFor(T, last.score);
+    c.appendChild(el(`<div class="notice">Your last ${esc(T.full)}: <b>${last.score} of ${T.max}</b> (${esc(b.label)}) on ${esc(fmt(last.ts))}.</div>`));
+  }
+  form.appendChild(el(`<p class="serifbody" style="margin-bottom:14px">Over the last two weeks, how often have you been bothered by the following?</p>`));
+  const prog = el(`<p class="muted" style="margin:0 0 14px">0 of ${T.items.length} answered</p>`);
+  form.appendChild(prog);
+  const submit = el(`<button class="btn" disabled>See my result</button>`);
+  T.items.forEach((q,i)=>{
+    const card = el(`<div class="card"><div class="qn">QUESTION ${i+1} OF ${T.items.length}</div><p style="margin:0 0 12px;font-weight:500">${esc(q)}</p><div class="opts four"></div></div>`);
+    const wrap = card.querySelector(".opts");
+    FREQ.forEach(([label,val])=>{
+      const b = el(`<button class="opt" aria-pressed="false">${esc(label)}</button>`);
+      b.onclick = ()=>{
+        ans[i] = val;
+        wrap.querySelectorAll("button").forEach(x=> x.setAttribute("aria-pressed", String(x===b)));
+        const n = ans.filter(a=>a!==null).length;
+        prog.textContent = n + " of " + T.items.length + " answered";
+        submit.disabled = n < T.items.length;
+      };
+      wrap.appendChild(b);
+    });
+    form.appendChild(card);
+  });
+  form.appendChild(submit);
+  form.appendChild(el(`<p class="muted" style="margin-top:14px">${esc(T.full)} was developed by Drs. Spitzer, Williams, Kroenke and colleagues and is free to use. It's a screening tool, not a diagnosis.</p>`));
+  submit.onclick = ()=>{
+    if(ans.some(a=>a===null)) return;
+    const score = ans.reduce((a,b)=>a+b, 0);
+    S.assess.push({id:uid(), ts:Date.now(), type:key, score, items:ans.slice()});
+    save();
+    c.innerHTML = "";
+    c.appendChild(checkResult(key, score, ans, hist));
+    window.scrollTo({top:0, behavior:"instant"});
+  };
+  c.appendChild(form);
+  return c;
+}
+
+function checkResult(key, score, ans, prevList){
+  const T = TESTS[key], b = bandFor(T, score);
+  const c = el(`<div></div>`);
+  if(key==="phq9" && ans[8] > 0){
+    c.appendChild(crisisCard());
+  }
+  const prev = prevList.length ? prevList[prevList.length-1] : null;
+  const delta = prev ? score - prev.score : null;
+  const card = el(`<div class="card"><p class="eyebrow">${esc(T.name)} · ${esc(T.full)}</p>
+    <div class="score"><b>${score}</b><span>out of ${T.max}</span><span class="tag ${b.tone}">${esc(b.label)}</span></div>
+    <div class="belief-bar"><i style="width:${(score/T.max*100).toFixed(0)}%"></i></div>
+    <p style="margin:14px 0 0">${esc(b.text)}</p>
+    ${delta!==null ? `<hr class="sep"><p style="margin:0"><b>Since last time:</b> ${delta===0?"no change":(delta<0?"down ":"up ")+Math.abs(delta)+" points"} (was ${prev.score}). ${Math.abs(delta)>=5 ? "A change of about five points or more is usually considered meaningful." : "Changes of less than about five points are within normal week-to-week variation."}</p>` : ""}
+  </div>`);
+  c.appendChild(card);
+
+  const nx = el(`<div class="card"><h2>What helps from here</h2><div class="row" data-n></div>
+    <p class="muted" style="margin:14px 0 0">${score >= (key==="phq9" ? 10 : 10) ? "At this score, a conversation with a doctor or counsellor is worth having alongside the self-help tools. Find a helpline or service for your country at <a href=\"https://findahelpline.com\" target=\"_blank\" rel=\"noopener\">findahelpline.com</a>." : "Re-take this in about two weeks. A downward trend means what you're doing is working; a flat or rising one is a reason to change approach or add support."}</p></div>`);
+  T.next.forEach(([label,to])=>{ const bt = el(`<button class="btn ghost sm">${esc(label)}</button>`); bt.onclick = ()=> go(to); nx.querySelector("[data-n]").appendChild(bt); });
+  const ch = el(`<button class="btn ghost sm">Talk it through</button>`); ch.onclick = ()=> go("chat"); nx.querySelector("[data-n]").appendChild(ch);
+  c.appendChild(nx);
+
+  const all = S.assess.filter(a=>a.type===key).slice().sort((a,b2)=>a.ts-b2.ts);
+  if(all.length > 1){
+    const t = el(`<div class="card"><h2>Your scores over time</h2><p class="muted" style="margin-bottom:10px">Lower is better. Each point is one check-in.</p>${trendChart(all, T.max)}</div>`);
+    c.appendChild(t);
+  }
+  const again = el(`<button class="btn quiet">‹ Back</button>`); again.onclick = ()=> go("checkin", {tab:key});
+  c.appendChild(again);
+  c.appendChild(el(`<p class="muted" style="margin-top:10px">A score is a snapshot, not a verdict, and not a diagnosis. Only a clinician who knows your history can diagnose.</p>`));
+  return c;
+}
+
+/* ═══ SCREEN: Chat ══════════════════════════════════════ */
+const STARTERS = [
+ "I made a mistake at work and I can't stop thinking about it.",
+ "I feel like I'm a failure.",
+ "Help me with a worry I can't shake.",
+ "I'm putting something off and feeling guilty about it."
+];
+SCREENS.chat = ()=>{
+  const c = el(`<div class="chatwrap"></div>`);
+  const hd = el(`<div class="chat-hd"><div><h1>Talk it through</h1><p class="muted" style="margin:2px 0 0">A CBT-style coach. Not a therapist, and not for emergencies.</p></div><button class="btn ghost sm" data-new>New chat</button></div>`);
+  const msgs = el(`<div class="msgs" role="log" aria-live="polite"></div>`);
+  const comp = el(`<div class="composer"><textarea rows="1" placeholder="What's on your mind?" aria-label="Message"></textarea><button class="btn" data-send>Send</button></div>`);
+  c.appendChild(hd); c.appendChild(msgs); c.appendChild(comp);
+  const ta = comp.querySelector("textarea"), sendBtn = comp.querySelector("[data-send]");
+  let busy = false, lastErr = null;
+
+  const draw = ()=>{
+    msgs.innerHTML = "";
+    if(!AI){
+      const n = el(`<div class="notice">Chat needs a free Groq key. Add one in Settings — it takes two minutes.<div style="margin-top:10px"><button class="btn sm">Open Settings</button></div></div>`);
+      n.querySelector("button").onclick = ()=> go("settings");
+      msgs.appendChild(n);
+    }
+    if(!S.chat.length){
+      msgs.appendChild(el(`<div class="msg bot"><p>Hi. Tell me what's on your mind — as raw as it sounds in your head. We'll look at it together: what you're telling yourself, whether it holds up, and what a truer version might sound like.</p></div>`));
+      const st = el(`<div class="starters"></div>`);
+      STARTERS.forEach(s=>{ const b = el(`<button class="chip">${esc(s)}</button>`); b.onclick = ()=> send(s); st.appendChild(b); });
+      msgs.appendChild(st);
+    }
+    S.chat.forEach(m=>{
+      if(m.role === "user"){
+        msgs.appendChild(el(`<div class="msg me">${esc(m.content).replace(/\n/g,"<br>")}</div>`));
+        if(m.flag) msgs.appendChild(crisisCard());
+      } else {
+        msgs.appendChild(el(`<div class="msg bot">${mdLite(m.content)}</div>`));
+      }
+    });
+    if(busy) msgs.appendChild(el(`<div class="msg bot"><span class="thinking"><i></i><i></i><i></i></span></div>`));
+    if(lastErr && !busy){
+      const e = aiErrorCard(lastErr);
+      const rt = el(`<button class="btn ghost sm" style="margin-top:10px">Try again</button>`);
+      rt.onclick = ()=>{ lastErr = null; reply(); };
+      e.appendChild(rt);
+      msgs.appendChild(e);
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+    sendBtn.disabled = busy;
+    ta.disabled = !AI;
+    sendBtn.disabled = busy || !AI;
+  };
+
+  const reply = async ()=>{
+    busy = true; lastErr = null; draw();
+    const risk = S.chat.length && S.chat[S.chat.length-1].flag;
+    try{
+      const txt = await MODEL.chat(S.chat, !!risk);
+      S.chat.push({role:"assistant", content:txt, ts:Date.now()});
+      if(S.chat.length > 80) S.chat = S.chat.slice(-60);
+      save();
+    }catch(err){ lastErr = err; }
+    busy = false; draw();
+  };
+  const send = text=>{
+    text = String(text||"").trim();
+    if(!text || busy || !AI) return;
+    S.chat.push({role:"user", content:text, ts:Date.now(), flag: riskFlagged(text)});
+    save();
+    ta.value = ""; ta.style.height = "auto";
+    reply();
+  };
+  sendBtn.onclick = ()=> send(ta.value);
+  const coarse = window.matchMedia && window.matchMedia("(pointer:coarse)").matches;
+  ta.onkeydown = e=>{ if(e.key==="Enter" && !e.shiftKey && !coarse){ e.preventDefault(); send(ta.value); } };
+  ta.oninput = ()=>{ ta.style.height = "auto"; ta.style.height = Math.min(140, ta.scrollHeight) + "px"; };
+  hd.querySelector("[data-new]").onclick = ()=>{
+    if(S.chat.length && !confirm("Start a new conversation? The current one will be cleared.")) return;
+    S.chat = []; lastErr = null; save(); draw();
+  };
+  draw();
+  return c;
+};
+
+/* ═══ SCREEN: More (mobile) ═════════════════════════════ */
+SCREENS.more = ()=>{
+  const c = el(`<div></div>`);
+  c.appendChild(el(`<h1>More</h1>`));
+  c.appendChild(el(`<p class="lede">Everything else in the toolkit.</p>`));
+  const g = el(`<div class="tiles"></div>`);
+  [["checkin","Check-in","Depression & anxiety scores"],["activate","Activate","Schedule and predict activities"],["expose","Exposure","Climb a fear ladder"],["rumination","Unstick","Break a thought loop"],["progress","Progress","Your patterns and shifts"],["settings","Settings","Themes, key, your data"]]
+    .forEach(([id,t,s])=>{ const b = el(`<button class="tile"><b>${esc(t)}</b><span>${esc(s)}</span></button>`); b.onclick = ()=> go(id); g.appendChild(b); });
+  c.appendChild(g);
+  return c;
+};
+
 /* ── boot ───────────────────────────────────────────────── */
 document.documentElement.dataset.theme = S.settings.theme || "daylight";
 refreshAI();
 go("home");
+if(!S.intro) showIntro();
 
 if("serviceWorker" in navigator){
   window.addEventListener("load", ()=> navigator.serviceWorker.register("sw.js").catch(()=>{}));

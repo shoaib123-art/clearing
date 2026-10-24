@@ -1,6 +1,6 @@
 /* Clearing — offline cache.
    Bump CACHE when you upload a new index.html, or phones keep the old one. */
-const CACHE = "clearing-v3";
+const CACHE = "clearing-v4";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
